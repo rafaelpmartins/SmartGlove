@@ -7,12 +7,19 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
 public class Cadastro_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private TextView dataText;
+    private TextView esporteText;
+    String[] listItems;
+    boolean[] checkedItems;
+    ArrayList<Integer> mUserItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +27,14 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
         setContentView(R.layout.cadastro_layout);
 
         dataText = (TextView) findViewById(R.id.dataText);
-
         dataText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
             }
         });
+
+        esporteText = (TextView)findViewById(R.id.esporteText);
     }
 
     public void showDatePickerDialog() {

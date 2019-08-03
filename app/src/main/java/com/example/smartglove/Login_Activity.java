@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 public class Login_Activity extends AppCompatActivity {
 
-    TextView irCadastro;
-    Button btnLogin;
+    private TextView irCadastro;
+    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
