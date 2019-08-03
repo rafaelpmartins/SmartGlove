@@ -17,9 +17,6 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
 
     private TextView dataText;
     private TextView esporteText;
-    String[] listItems;
-    boolean[] checkedItems;
-    ArrayList<Integer> mUserItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
