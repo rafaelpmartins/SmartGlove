@@ -1,37 +1,49 @@
 package com.example.smartglove;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
-import static android.view.View.GONE;
+import java.util.Calendar;
 
-public class Cadastro_Activity extends AppCompatActivity {
 
-    Button botaoNasc;
-    DatePicker dataNasc;
+public class Cadastro_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    private TextView dataText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_layout);
 
-        botaoNasc = (Button) findViewById(R.id.botaoNasc);
+        dataText = (TextView) findViewById(R.id.dataText);
 
-        botaoNasc.setOnClickListener(new View.OnClickListener() {
+        dataText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataNasc = (DatePicker) findViewById(R.id.dataNasc);
-                if (dataNasc.getVisibility() == GONE) {
-                    dataNasc.setVisibility(View.VISIBLE);
-                    botaoNasc.setText("Confirmar");
-                } else if (botaoNasc.getText() == "Confirmar") {
-                    botaoNasc.setText("Trocar");
-                    dataNasc.setVisibility(View.GONE);
-                }
+                showDatePickerDialog();
             }
         });
+    }
+
+    public void showDatePickerDialog() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        month++;
+
+        String date = dayOfMonth + "/" + month + "/" + year;
+        dataText.setText(date);
     }
 }

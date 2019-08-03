@@ -3,10 +3,6 @@
 
     <corners android:radius="40dp" ></corners>
 
-    <stroke android:width="2dp"></stroke>
-    <gradient android:startColor="#B71C1C"
-        android:centerColor="#D50000"
-        android:endColor="#000"
-        android:angle="45"></gradient>
+    <solid android:color="@color/VinhoCor"></solid>
     
 </shape>
