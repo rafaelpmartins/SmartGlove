@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SmartGlove</string>
+    <string-array name="esporte_item">
+        <item>Aikido</item>
+        <item>Boxe</item>
+        <item>Caratê</item>
+        <item>Jeet Kune Do</item>
+        <item>Jiu-Jitsu</item>
+        <item>Kick Boxing</item>
+        <item>Muai Thay</item>
+        <item>Wing Chun</item>
+    </string-array>
 </resources>
