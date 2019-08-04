@@ -87,7 +87,8 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_lock_dp"
                 android:drawableRight="@drawable/ic_lock_dp"
-                android:hint="@string/senha" />
+                android:hint="@string/senha"
+                android:password="true" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
