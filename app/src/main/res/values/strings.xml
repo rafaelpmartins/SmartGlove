@@ -5,6 +5,24 @@
     <string name="ok_label">OK</string>
     <string name="dismiss_label">Cancelar</string>
     <string name="clear_all_label">Apagar todos</string>
+    <string name="smart_glove">Smart glove</string>
+    <string name="senha">Senha:</string>
+    <string name="login">Login</string>
+    <string name="n_o_tem_cadastro">Não tem cadastro?</string>
+    <string name="todo">TODO</string>
+    <string name="email">Email:</string>
+    <string name="feminino">Feminino</string>
+    <string name="masculino">Masculino</string>
+    <string name="g_nero">Gênero</string>
+    <string name="data_de_nascimento">Data de Nascimento</string>
+    <string name="nome">Nome:</string>
+    <string name="smart_glove_cadastro">Smart Glove</string>
+    <string name="senha_cadastro">Senha:</string>
+    <string name="adicionar_esportes">Adicionar Esporte(s)</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="j_tem_cadastro">Já tem cadastro?</string>
+    <string name="email_cadastro">Email:</string>
+    <string name="todo_cadastro">TODO</string>
 
     <string-array name="esporte_item">
         <item>Aikido</item>

@@ -6,11 +6,9 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/BrancoCor"
         tools:context=".Cadastro_Activity">
 
@@ -23,6 +21,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:contentDescription="@string/todo_cadastro"
             android:src="@drawable/logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +35,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="140dp"
-            android:text="Smart Glove"
+            android:text="@string/smart_glove_cadastro"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:textColor="#000"
+            android:textColor="@color/PretoCor"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintHorizontal_bias="0.48"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
@@ -46,7 +45,7 @@
             tools:ignore="MissingConstraints" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout3"
+            android:id="@+id/nomeEdt"
             android:layout_width="300dp"
             android:layout_height="85dp"
             android:layout_marginStart="8dp"
@@ -64,24 +63,33 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:drawableEnd="@drawable/ic_person_dp"
                 android:drawableRight="@drawable/ic_person_dp"
-                android:hint="Nome:" />
+                android:hint="@string/nome" />
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/dataText"
+        <Button
+            android:id="@+id/dataBtn"
             android:layout_width="285dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:background="@drawable/botao_nasc"
+            android:drawableEnd="@drawable/ic_date_range_dp"
             android:drawableRight="@drawable/ic_date_range_dp"
-            android:text="Data de Nascimento"
+            android:padding="5dp"
+            android:text="@string/data_de_nascimento"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="@color/VinhoCor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/nomeEdt"
             tools:ignore="MissingConstraints" />
 
         <LinearLayout
@@ -98,14 +106,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dataText"
+            app:layout_constraintTop_toBottomOf="@+id/dataBtn"
             tools:ignore="MissingConstraints">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Gênero" />
+                android:text="@string/g_nero" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -116,18 +124,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Masculino" />
+                    android:text="@string/masculino" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Feminino" />
+                    android:text="@string/feminino" />
             </RadioGroup>
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout4"
+            android:id="@+id/emailEdtCadastro"
             android:layout_width="300dp"
             android:layout_height="85dp"
             android:layout_marginStart="8dp"
@@ -144,12 +152,13 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_email_dp"
                 android:drawableRight="@drawable/ic_email_dp"
-                android:hint="Email:" />
+                android:hint="@string/email_cadastro" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout5"
+            android:id="@+id/senhaEdtCadastro"
             android:layout_width="300dp"
             android:layout_height="85dp"
             android:layout_marginStart="8dp"
@@ -159,30 +168,37 @@
             android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+            app:layout_constraintTop_toBottomOf="@+id/emailEdtCadastro">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_lock_dp"
                 android:drawableRight="@drawable/ic_lock_dp"
-                android:hint="Senha:"
-                android:password="true" />
+                android:hint="@string/senha_cadastro" />
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/esporteText"
+        <Button
+            android:id="@+id/esporteBtn"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:background="@drawable/botao_nasc"
+            android:drawableEnd="@drawable/ic_add_circle_dp"
             android:drawableRight="@drawable/ic_add_circle_dp"
-            android:text="Adicionar Esportes"
+            android:padding="5dp"
+            android:text="@string/adicionar_esportes"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColor="@color/VinhoCor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+            app:layout_constraintTop_toBottomOf="@+id/senhaEdtCadastro"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -195,12 +211,12 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/botao_login"
-            android:text="Cadastrar"
-            android:textColor="#FFF"
-            android:textSize="15dp"
+            android:text="@string/cadastrar"
+            android:textColor="@color/BrancoCor"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/esporteText"
+            app:layout_constraintTop_toBottomOf="@+id/esporteBtn"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -213,8 +229,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="30dp"
-            android:text="Já tem cadastro?"
-            android:textSize="15dp"
+            android:text="@string/j_tem_cadastro"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"

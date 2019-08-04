@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="VinhoCor">#B71C1C</color>
     <color name="BrancoCor">#fff</color>
+    <color name="PretoCor">#000</color>
 </resources>

@@ -11,21 +11,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
 
 public class Cadastro_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private TextView dataText;
-    private TextView esporteText;
+    private TextView dataBtn;
+    private TextView esporteBtn;
     private TextView irLogin;
     private Button btnCadastrar;
-    String[] listItems;
-    boolean[] checkedItems;
-    ArrayList<Integer> mUserItems = new ArrayList<>();
+    private String[] listItems;
+    private boolean[] checkedItems;
+    private ArrayList<Integer> mUserItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +49,20 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
             }
         });
 
-        dataText = (TextView) findViewById(R.id.dataText);
-        dataText.setOnClickListener(new View.OnClickListener() {
+        dataBtn = (Button) findViewById(R.id.dataBtn);
+        dataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
             }
         });
 
-        esporteText = (TextView) findViewById(R.id.esporteText);
+        esporteBtn = (Button) findViewById(R.id.esporteBtn);
 
         listItems = getResources().getStringArray(R.array.esporte_item);
         checkedItems = new boolean[listItems.length];
 
-        esporteText.setOnClickListener(new View.OnClickListener() {
+        esporteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Cadastro_Activity.this);
@@ -91,9 +89,9 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
                                 item = item + ", ";
                             }
                         }
-                        esporteText.setText(item);
-                        if (esporteText.getText() == "") {
-                            esporteText.setText("Adicionar Esportes");
+                        esporteBtn.setText(item);
+                        if (esporteBtn.getText() == "") {
+                            esporteBtn.setText("Adicionar Esporte(s)");
                         }
                     }
                 });
@@ -111,7 +109,7 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
                         for (int i = 0; i < checkedItems.length; i++) {
                             checkedItems[i] = false;
                             mUserItems.clear();
-                            esporteText.setText("Adicionar Esportes");
+                            esporteBtn.setText("Adicionar Esporte(s)");
                         }
                     }
                 });
@@ -137,6 +135,6 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
         month++;
 
         String date = dayOfMonth + "/" + month + "/" + year;
-        dataText.setText(date);
+        dataBtn.setText(date);
     }
 }
