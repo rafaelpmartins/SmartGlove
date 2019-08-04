@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">SmartGlove</string>
+    <string name="make_an_order">Make an order</string>
+    <string name="dialog_title">Escolha um ou mais esportes</string>
+    <string name="ok_label">OK</string>
+    <string name="dismiss_label">Cancelar</string>
+    <string name="clear_all_label">Apagar todos</string>
+
     <string-array name="esporte_item">
         <item>Aikido</item>
         <item>Boxe</item>
