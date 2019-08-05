@@ -10,9 +10,14 @@
 
     <style name="TemaSemBarra" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/VinhoCor</item>
+        <item name="colorPrimary">@color/BrancoCor</item>
         <item name="colorPrimaryDark">@color/VinhoCor</item>
         <item name="colorAccent">@color/VinhoCor</item>
+        <item name="drawerArrowStyle">@style/DrawerIcon</item>
+    </style>
+
+    <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/VinhoCor</item>
     </style>
 
 </resources>

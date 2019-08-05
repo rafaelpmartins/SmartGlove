@@ -23,6 +23,8 @@
     <string name="j_tem_cadastro">Já tem cadastro?</string>
     <string name="email_cadastro">Email:</string>
     <string name="todo_cadastro">TODO</string>
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Fechar</string>
 
     <string-array name="esporte_item">
         <item>Aikido</item>

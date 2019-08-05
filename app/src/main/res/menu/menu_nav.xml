@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_item_one"
+            android:icon="@drawable/ic_bluetooth_dp"
+            android:title="bluetooth" />
+        <item
+            android:id="@+id/nav_item_two"
+            android:icon="@drawable/ic_settings_dp"
+            android:title="Configurações" />
+        <item
+            android:id="@+id/nav_item_three"
+            android:icon="@drawable/ic_import_contacts_dp"
+            android:title="Manual" />
+    </group>
+    <group android:id="@+id/group_menu">
+        <item
+            android:id="@+id/nav_item_four"
+            android:icon="@drawable/ic_show_chart_dp"
+            android:title="Graficos" />
+        <item
+            android:id="@+id/nav_item_five"
+            android:icon="@drawable/ic_file_download_dp"
+            android:title="Download" />
+    </group>
+    <item android:title="Avaliação">
+        <menu>
+            <item
+                android:id="@+id/nav_item_six"
+                android:icon="@drawable/ic_star_dp"
+                android:title="Avalie" />
+            <item
+                android:id="@+id/nav_item_seven"
+                android:icon="@drawable/ic_share_dp"
+                android:title="Compartilhe" />
+        </menu>
+    </item>
+</menu>
