@@ -7,22 +7,21 @@
             android:title="bluetooth" />
         <item
             android:id="@+id/nav_item_two"
-            android:icon="@drawable/ic_settings_dp"
-            android:title="Configurações" />
+            android:icon="@drawable/ic_show_chart_dp"
+            android:title="Graficos" />
         <item
             android:id="@+id/nav_item_three"
-            android:icon="@drawable/ic_import_contacts_dp"
-            android:title="Manual" />
+            android:icon="@drawable/ic_file_download_dp"
+            android:title="Download" />
     </group>
     <group android:id="@+id/group_menu">
         <item
             android:id="@+id/nav_item_four"
-            android:icon="@drawable/ic_show_chart_dp"
-            android:title="Graficos" />
+            android:icon="@drawable/ic_settings_dp"
+            android:title="Configurações" />
         <item
-            android:id="@+id/nav_item_five"
-            android:icon="@drawable/ic_file_download_dp"
-            android:title="Download" />
+            android:icon="@drawable/ic_import_contacts_dp"
+            android:title="Manual" />
     </group>
     <item android:title="Avaliação">
         <menu>
