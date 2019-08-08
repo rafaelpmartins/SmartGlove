@@ -1,5 +1,6 @@
 package com.example.smartglove;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_item_one: {
+                Intent intent = new Intent(getApplicationContext(), Bluetooth_Activity.class);
+                startActivity(intent);
                 Toast.makeText(this, "Menu 1", Toast.LENGTH_SHORT).show();
                 break;
             }
