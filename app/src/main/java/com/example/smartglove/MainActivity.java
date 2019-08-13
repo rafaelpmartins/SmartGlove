@@ -40,9 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_item_one: {
-                //Intent intent = new Intent(getApplicationContext(), Bluetooth_Activity.class);
-                //startActivity(intent);
-                Toast.makeText(this, "Menu 1", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Bluetooth_Activity.class);
+                startActivity(intent);
                 break;
             }
             case R.id.nav_item_two: {
