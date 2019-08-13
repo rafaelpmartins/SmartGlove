@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TemaSemBarra">
-        <activity android:name=".Bluetooth_Activity"></activity>
         <activity android:name=".Cadastro_Activity" />
         <activity android:name=".Login_Activity">
             <intent-filter>

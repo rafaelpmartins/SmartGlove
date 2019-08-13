@@ -36,7 +36,4 @@
         <item>Muai Thay</item>
         <item>Wing Chun</item>
     </string-array>
-
-    <string name="none_paired">Nenhum dispositivo foi pareado</string>
-    <string name="none_found">Nenhum dispositivo encontrado</string>
 </resources>
