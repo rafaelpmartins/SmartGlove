@@ -1,25 +1,37 @@
 package com.example.smartglove;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class Bluetooth_Activity extends AppCompatActivity {
 
-    Button btnLigar;
-    Button btnVisibilidadeBT;
-    BluetoothAdapter mBluetoothAdapter;
-    TextView estadoBluetooth;
-    TextView estadoBluetoothTitulo;
-    TextView VisibilidadeBluetooh;
+    private Button btnLigar;
+    private Button btnVisibilidadeBT;
+    private Button btnProcurarDispositivos;
+    private BluetoothAdapter mBluetoothAdapter;
+    private TextView estadoBluetooth;
+    private TextView estadoBluetoothTitulo;
+    private TextView VisibilidadeBluetooh;
+    private TextView txtDetectarBluetooth;
+    private ArrayList<BluetoothDevice> mBTDispositvos = new ArrayList<>();
+    private DispositivosListAdapter mDispositivosListAdapter;
+    private ListView ListNovosDispositivos;
 
     //BT = bluetooth
 
@@ -29,17 +41,22 @@ public class Bluetooth_Activity extends AppCompatActivity {
         setContentView(R.layout.bluetooth_layout);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        estadoBluetoothTitulo = (TextView) findViewById(R.id.estadoBluetoohTitulo);
-        estadoBluetooth = (TextView) findViewById(R.id.estadoBluetooh);
+        btnProcurarDispositivos = (Button) findViewById(R.id.btnProcurarDispositivos);
         btnLigar = (Button) findViewById(R.id.btnLigar);
         btnVisibilidadeBT = (Button) findViewById(R.id.btnVisibilidadeBT);
+        estadoBluetoothTitulo = (TextView) findViewById(R.id.estadoBluetoohTitulo);
+        estadoBluetooth = (TextView) findViewById(R.id.estadoBluetooh);
         VisibilidadeBluetooh = (TextView) findViewById(R.id.VisibilidadeBluetooh);
+        txtDetectarBluetooth = (TextView) findViewById(R.id.txtDetectarBluetooth);
+        ListNovosDispositivos = (ListView) findViewById(R.id.ListNovosDispositivos);
+        mBTDispositvos = new ArrayList<>();
 
         btnLigar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ligarDesligarBluetooth();
                 btnVisibilidadeBT.setVisibility(View.VISIBLE);
+                btnProcurarDispositivos.setVisibility(View.VISIBLE);
             }
         });
 
@@ -47,6 +64,13 @@ public class Bluetooth_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 VisivelBT();
+            }
+        });
+
+        btnProcurarDispositivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProcurarBt();
             }
         });
     }
@@ -60,6 +84,10 @@ public class Bluetooth_Activity extends AppCompatActivity {
 
                 switch (estado) {
                     case BluetoothAdapter.STATE_OFF:
+                        btnVisibilidadeBT.setVisibility(View.GONE);
+                        btnProcurarDispositivos.setVisibility(View.GONE);
+                        txtDetectarBluetooth.setVisibility(View.GONE);
+                        VisibilidadeBluetooh.setVisibility(View.GONE);
                         estadoBluetooth.setText("Desligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
@@ -69,6 +97,8 @@ public class Bluetooth_Activity extends AppCompatActivity {
                         estadoBluetooth.setText("Ligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
+                        txtDetectarBluetooth.setVisibility(View.VISIBLE);
+                        VisibilidadeBluetooh.setVisibility(View.VISIBLE);
                         estadoBluetooth.setText("Ligando...");
                         estadoBluetoothTitulo.setVisibility(View.VISIBLE);
                         break;
@@ -76,6 +106,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
             }
         }
     };
+
     //serve para checar a visibilidade do bluetooth
     private final BroadcastReceiver mBroadcastReceiver2 = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -101,6 +132,22 @@ public class Bluetooth_Activity extends AppCompatActivity {
                         break;
                 }
             }
+        }
+    };
+
+    //Busca novos Dispositivos e executa o metodo ProcurarBt
+    private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (action.equals(BluetoothDevice.ACTION_FOUND)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mBTDispositvos.add(device);
+                mDispositivosListAdapter = new DispositivosListAdapter(context, R.layout.dispositivo_adapter_view, mBTDispositvos);
+                ListNovosDispositivos.setAdapter(mDispositivosListAdapter);
+            }
+
         }
     };
 
@@ -143,5 +190,45 @@ public class Bluetooth_Activity extends AppCompatActivity {
 
         IntentFilter VisibilidadeIntentFilter = new IntentFilter(mBluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
         registerReceiver(mBroadcastReceiver2, VisibilidadeIntentFilter);
+    }
+
+    private void ProcurarBt() {
+        txtDetectarBluetooth.setText("Procurando novos dispositivos...");
+
+        if (mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+            txtDetectarBluetooth.setText("Cancelando busca...");
+
+            checarPermissoesBT();
+
+            mBluetoothAdapter.startDiscovery();
+            IntentFilter buscarDispositivosIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            registerReceiver(mBroadcastReceiver3, buscarDispositivosIntent);
+        }
+        if (!mBluetoothAdapter.isDiscovering()) {
+
+            checarPermissoesBT();
+
+            mBluetoothAdapter.startDiscovery();
+            IntentFilter buscarDispositivosIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            registerReceiver(mBroadcastReceiver3, buscarDispositivosIntent);
+        }
+    }
+
+    /**
+     * Este método é obrigatório para todos os dispositivos que executam a API23 +
+     * O Android deve verificar programaticamente as permissões para o bluetooth. Colocar as permissões adequadas no manifest não é suficiente.
+     * NOTA: Isso só será executado em versões > LOLLIPOP porque não é necessário de outra forma.
+     */
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checarPermissoesBT() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
+            permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
+            if (permissionCheck != 0) {
+                this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Qualquer número
+            }
+        }
     }
 }
