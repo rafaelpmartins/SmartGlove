@@ -18,6 +18,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
     Button btnConectar;
     BluetoothAdapter mBluetoothAdapter;
     TextView estadoBluetooth;
+    TextView estadoBluetoothTitulo;
 
     //BT = bluetooth
 
@@ -27,6 +28,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
         setContentView(R.layout.bluetooth_layout);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        estadoBluetoothTitulo = (TextView) findViewById(R.id.estadoBluetoohTitulo);
         estadoBluetooth = (TextView) findViewById(R.id.estadoBluetooh);
 
         btnConectar = (Button) findViewById(R.id.btnConectar);
@@ -38,11 +40,9 @@ public class Bluetooth_Activity extends AppCompatActivity {
         });
     }
 
-    // Create a BroadcastReceiver for ACTION_FOUND
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            // When discovery finds a device
             if (action.equals(mBluetoothAdapter.ACTION_STATE_CHANGED)) {
                 final int estado = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, mBluetoothAdapter.ERROR);
 
@@ -51,13 +51,14 @@ public class Bluetooth_Activity extends AppCompatActivity {
                         estadoBluetooth.setText("Desligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
-                        estadoBluetooth.setText("Está desligando");
+                        estadoBluetooth.setText("Desligando...");
                         break;
                     case BluetoothAdapter.STATE_ON:
                         estadoBluetooth.setText("Ligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
-                        estadoBluetooth.setText("Está ligando");
+                        estadoBluetooth.setText("Ligando...");
+                        estadoBluetoothTitulo.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -66,7 +67,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Toast.makeText(this, "Aplicação fechou", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "A Conexão se perdeu!", Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 
@@ -75,7 +76,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
             Toast.makeText(this, "Bluetooth não funciona no seu aparelho", Toast.LENGTH_SHORT).show();
         }
         if (!mBluetoothAdapter.isEnabled()) {
-            btnConectar.setText("Desconectar");
+            btnConectar.setText("Desligar");
 
             Intent ligarBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(ligarBtIntent);
@@ -84,7 +85,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
             registerReceiver(mBroadcastReceiver1, BluetoothIntent);
         }
         if (mBluetoothAdapter.isEnabled()) {
-            btnConectar.setText("Conectar");
+            btnConectar.setText("Ligar");
 
             mBluetoothAdapter.disable();
 
