@@ -13,14 +13,14 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
-public class Bluetooth_Activity extends AppCompatActivity {
+public class Bluetooth_Activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private Button btnLigar;
     private Button btnVisibilidadeBT;
@@ -32,6 +32,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
     private ArrayList<BluetoothDevice> mBTDispositvos = new ArrayList<>();
     private DispositivosListAdapter mDispositivosListAdapter;
     private ListView ListNovosDispositivos;
+    private TextView receberBroadcast4;
 
     //BT = bluetooth
 
@@ -49,6 +50,12 @@ public class Bluetooth_Activity extends AppCompatActivity {
         VisibilidadeBluetooh = (TextView) findViewById(R.id.VisibilidadeBluetooh);
         ListNovosDispositivos = (ListView) findViewById(R.id.ListNovosDispositivos);
         mBTDispositvos = new ArrayList<>();
+        receberBroadcast4 = (TextView) findViewById(R.id.receberBroadcast4);
+
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        registerReceiver(mBroadcastReceiver4, filter);
+
+        ListNovosDispositivos.setOnItemClickListener(Bluetooth_Activity.this);
 
         btnLigar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +72,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
                 VisivelBT();
             }
         });
-
         btnProcurarDispositivos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +154,30 @@ public class Bluetooth_Activity extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver mBroadcastReceiver4 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
+                BluetoothDevice mDispositivo = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                //3 casos:
+                //caso 1: Já há uma ligação
+                if (mDispositivo.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    receberBroadcast4.setText("Já está pareado");
+                }
+                //caso 2: Criando uma ligação
+                if (mDispositivo.getBondState() == BluetoothDevice.BOND_BONDING) {
+                    receberBroadcast4.setText("Criando pareamento");
+                }
+                //caso 3: ligação quebrada
+                if (mDispositivo.getBondState() == BluetoothDevice.BOND_NONE) {
+                    receberBroadcast4.setText("não foi possivel parear");
+                }
+            }
+        }
+    };
+
     @Override
     protected void onDestroy() {
         mBluetoothAdapter.disable();
@@ -179,8 +209,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
     }
 
     private void VisivelBT() {
-        VisibilidadeBluetooh.setText("Visivel por 300 segundos...");
-
         Intent VisibilidadeIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         VisibilidadeIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
         startActivity(VisibilidadeIntent);
@@ -222,6 +250,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
             new CountDownTimer(60000, 10) {
                 public void onTick(long millisUntilFinished) {
                 }
+
                 @Override
                 public void onFinish() {
                     btnProcurarDispositivos.setText("Procurar");
@@ -241,7 +270,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
      * O Android deve verificar programaticamente as permissões para o bluetooth. Colocar as permissões adequadas no manifest não é suficiente.
      * NOTA: Isso só será executado em versões > LOLLIPOP porque não é necessário de outra forma.
      */
-
     @TargetApi(Build.VERSION_CODES.M)
     private void checarPermissoesBT() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
@@ -250,6 +278,21 @@ public class Bluetooth_Activity extends AppCompatActivity {
             if (permissionCheck != 0) {
                 this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Qualquer número
             }
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        //primeiro cancelar a descoberta porque é muito intensivo na memória.
+        mBluetoothAdapter.cancelDiscovery();
+
+        String nomeDispositivo = mBTDispositvos.get(i).getName();
+
+        //criando uma ligação.
+        //NOTA: Requer API 17+ (JellyBean)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            Toast.makeText(this, "Tentando emparelhar com " + nomeDispositivo, Toast.LENGTH_SHORT).show();
+            mBTDispositvos.get(i).createBond();
         }
     }
 }
