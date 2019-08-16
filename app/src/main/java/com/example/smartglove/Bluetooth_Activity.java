@@ -194,6 +194,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
             mBluetoothAdapter.cancelDiscovery();
             btnProcurarDispositivos.setText("Procurar");
             Toast.makeText(this, "Cancelando Busca...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Aguarde 60 segundos, para fazer uma nova busca", Toast.LENGTH_SHORT).show();
 
             //desativar o botao por 60 segundos
             btnProcurarDispositivos.setEnabled(false);
@@ -215,7 +216,17 @@ public class Bluetooth_Activity extends AppCompatActivity {
         }
         if (!mBluetoothAdapter.isDiscovering()) {
             Toast.makeText(this, "Procurando novos dispositivos...", Toast.LENGTH_SHORT).show();
+
+            //serve para trocar o texto do botão após 60 segundos 'se a busca não for cancelada'
             btnProcurarDispositivos.setText("Cancelar");
+            new CountDownTimer(60000, 10) {
+                public void onTick(long millisUntilFinished) {
+                }
+                @Override
+                public void onFinish() {
+                    btnProcurarDispositivos.setText("Procurar");
+                }
+            }.start();
 
             checarPermissoesBT();
 
