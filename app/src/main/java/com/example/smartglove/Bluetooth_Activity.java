@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
     private TextView estadoBluetooth;
     private TextView estadoBluetoothTitulo;
     private TextView VisibilidadeBluetooh;
-    private TextView txtDetectarBluetooth;
     private ArrayList<BluetoothDevice> mBTDispositvos = new ArrayList<>();
     private DispositivosListAdapter mDispositivosListAdapter;
     private ListView ListNovosDispositivos;
@@ -47,7 +47,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
         estadoBluetoothTitulo = (TextView) findViewById(R.id.estadoBluetoohTitulo);
         estadoBluetooth = (TextView) findViewById(R.id.estadoBluetooh);
         VisibilidadeBluetooh = (TextView) findViewById(R.id.VisibilidadeBluetooh);
-        txtDetectarBluetooth = (TextView) findViewById(R.id.txtDetectarBluetooth);
         ListNovosDispositivos = (ListView) findViewById(R.id.ListNovosDispositivos);
         mBTDispositvos = new ArrayList<>();
 
@@ -86,7 +85,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
                     case BluetoothAdapter.STATE_OFF:
                         btnVisibilidadeBT.setVisibility(View.GONE);
                         btnProcurarDispositivos.setVisibility(View.GONE);
-                        txtDetectarBluetooth.setVisibility(View.GONE);
                         VisibilidadeBluetooh.setVisibility(View.GONE);
                         estadoBluetooth.setText("Desligado");
                         break;
@@ -97,7 +95,6 @@ public class Bluetooth_Activity extends AppCompatActivity {
                         estadoBluetooth.setText("Ligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
-                        txtDetectarBluetooth.setVisibility(View.VISIBLE);
                         VisibilidadeBluetooh.setVisibility(View.VISIBLE);
                         estadoBluetooth.setText("Ligando...");
                         estadoBluetoothTitulo.setVisibility(View.VISIBLE);
@@ -193,11 +190,22 @@ public class Bluetooth_Activity extends AppCompatActivity {
     }
 
     private void ProcurarBt() {
-        txtDetectarBluetooth.setText("Procurando novos dispositivos...");
-
         if (mBluetoothAdapter.isDiscovering()) {
             mBluetoothAdapter.cancelDiscovery();
-            txtDetectarBluetooth.setText("Cancelando busca...");
+            btnProcurarDispositivos.setText("Procurar");
+            Toast.makeText(this, "Cancelando Busca...", Toast.LENGTH_SHORT).show();
+
+            //desativar o botao por 60 segundos
+            btnProcurarDispositivos.setEnabled(false);
+            new CountDownTimer(60000, 10) {
+                public void onTick(long millisUntilFinished) {
+                }
+
+                @Override
+                public void onFinish() {
+                    btnProcurarDispositivos.setEnabled(true);
+                }
+            }.start();
 
             checarPermissoesBT();
 
@@ -206,6 +214,8 @@ public class Bluetooth_Activity extends AppCompatActivity {
             registerReceiver(mBroadcastReceiver3, buscarDispositivosIntent);
         }
         if (!mBluetoothAdapter.isDiscovering()) {
+            Toast.makeText(this, "Procurando novos dispositivos...", Toast.LENGTH_SHORT).show();
+            btnProcurarDispositivos.setText("Cancelar");
 
             checarPermissoesBT();
 
