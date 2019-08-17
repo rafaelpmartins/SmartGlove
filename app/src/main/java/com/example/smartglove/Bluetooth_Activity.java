@@ -37,16 +37,9 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.bluetooth_layout);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        btnProcurarDispositivos = (Button) findViewById(R.id.btnProcurarDispositivos);
-        btnLigar = (Button) findViewById(R.id.btnLigar);
-        btnVisibilidadeBT = (Button) findViewById(R.id.btnVisibilidadeBT);
-        txtEstadoBluetoothTitulo = (TextView) findViewById(R.id.txtEstadoBluetoohTitulo);
-        txtEstadoBluetooth = (TextView) findViewById(R.id.txtEstadoBluetooh);
-        txtVisibilidadeBluetooh = (TextView) findViewById(R.id.txtVisibilidadeBluetooh);
-        ListNovosDispositivos = (ListView) findViewById(R.id.listNovosDispositivos);
-        txtReceberBroadcast4 = (TextView) findViewById(R.id.txtReceberBroadcast4);
         ArrayBTDispositvos = new ArrayList<>();
+
+        findViewById();
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(mBroadcastReceiver4, filter);
@@ -290,5 +283,16 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
             Toast.makeText(this, "Tentando emparelhar com " + nomeDispositivo, Toast.LENGTH_SHORT).show();
             ArrayBTDispositvos.get(i).createBond();
         }
+    }
+
+    private void findViewById() {
+        btnProcurarDispositivos = (Button) findViewById(R.id.btnProcurarDispositivos);
+        btnLigar = (Button) findViewById(R.id.btnLigar);
+        btnVisibilidadeBT = (Button) findViewById(R.id.btnVisibilidadeBT);
+        txtEstadoBluetoothTitulo = (TextView) findViewById(R.id.txtEstadoBluetoohTitulo);
+        txtEstadoBluetooth = (TextView) findViewById(R.id.txtEstadoBluetooh);
+        txtVisibilidadeBluetooh = (TextView) findViewById(R.id.txtVisibilidadeBluetooh);
+        ListNovosDispositivos = (ListView) findViewById(R.id.listNovosDispositivos);
+        txtReceberBroadcast4 = (TextView) findViewById(R.id.txtReceberBroadcast4);
     }
 }
