@@ -22,17 +22,12 @@ import java.util.ArrayList;
 
 public class Bluetooth_Activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private Button btnLigar;
-    private Button btnVisibilidadeBT;
-    private Button btnProcurarDispositivos;
-    private BluetoothAdapter mBluetoothAdapter;
-    private TextView estadoBluetooth;
-    private TextView estadoBluetoothTitulo;
-    private TextView VisibilidadeBluetooh;
-    private ArrayList<BluetoothDevice> mBTDispositvos = new ArrayList<>();
-    private DispositivosListAdapter mDispositivosListAdapter;
+    private Button btnLigar, btnVisibilidadeBT, btnProcurarDispositivos;
+    private TextView txtReceberBroadcast4, txtEstadoBluetooth, txtEstadoBluetoothTitulo, txtVisibilidadeBluetooh;
     private ListView ListNovosDispositivos;
-    private TextView receberBroadcast4;
+    private BluetoothAdapter mBluetoothAdapter;
+    private ArrayList<BluetoothDevice> ArrayBTDispositvos = new ArrayList<>();
+    private DispositivosListAdapter mDispositivosListAdapter;
 
     //BT = bluetooth
 
@@ -42,15 +37,16 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.bluetooth_layout);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         btnProcurarDispositivos = (Button) findViewById(R.id.btnProcurarDispositivos);
         btnLigar = (Button) findViewById(R.id.btnLigar);
         btnVisibilidadeBT = (Button) findViewById(R.id.btnVisibilidadeBT);
-        estadoBluetoothTitulo = (TextView) findViewById(R.id.estadoBluetoohTitulo);
-        estadoBluetooth = (TextView) findViewById(R.id.estadoBluetooh);
-        VisibilidadeBluetooh = (TextView) findViewById(R.id.VisibilidadeBluetooh);
-        ListNovosDispositivos = (ListView) findViewById(R.id.ListNovosDispositivos);
-        mBTDispositvos = new ArrayList<>();
-        receberBroadcast4 = (TextView) findViewById(R.id.receberBroadcast4);
+        txtEstadoBluetoothTitulo = (TextView) findViewById(R.id.txtEstadoBluetoohTitulo);
+        txtEstadoBluetooth = (TextView) findViewById(R.id.txtEstadoBluetooh);
+        txtVisibilidadeBluetooh = (TextView) findViewById(R.id.txtVisibilidadeBluetooh);
+        ListNovosDispositivos = (ListView) findViewById(R.id.listNovosDispositivos);
+        txtReceberBroadcast4 = (TextView) findViewById(R.id.txtReceberBroadcast4);
+        ArrayBTDispositvos = new ArrayList<>();
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(mBroadcastReceiver4, filter);
@@ -91,19 +87,19 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
                     case BluetoothAdapter.STATE_OFF:
                         btnVisibilidadeBT.setVisibility(View.GONE);
                         btnProcurarDispositivos.setVisibility(View.GONE);
-                        VisibilidadeBluetooh.setVisibility(View.GONE);
-                        estadoBluetooth.setText("Desligado");
+                        txtVisibilidadeBluetooh.setVisibility(View.GONE);
+                        txtEstadoBluetooth.setText("Desligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
-                        estadoBluetooth.setText("Desligando...");
+                        txtEstadoBluetooth.setText("Desligando...");
                         break;
                     case BluetoothAdapter.STATE_ON:
-                        estadoBluetooth.setText("Ligado");
+                        txtEstadoBluetooth.setText("Ligado");
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
-                        VisibilidadeBluetooh.setVisibility(View.VISIBLE);
-                        estadoBluetooth.setText("Ligando...");
-                        estadoBluetoothTitulo.setVisibility(View.VISIBLE);
+                        txtVisibilidadeBluetooh.setVisibility(View.VISIBLE);
+                        txtEstadoBluetooth.setText("Ligando...");
+                        txtEstadoBluetoothTitulo.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -119,19 +115,19 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
 
                 switch (modo) {
                     case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
-                        VisibilidadeBluetooh.setText("Visivel");
+                        txtVisibilidadeBluetooh.setText("Visivel");
                         break;
                     case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
-                        VisibilidadeBluetooh.setText("Invisivel, e aberto a conexões");
+                        txtVisibilidadeBluetooh.setText("Invisivel, e aberto a conexões");
                         break;
                     case BluetoothAdapter.SCAN_MODE_NONE:
-                        VisibilidadeBluetooh.setText("Invisivel, fechado a conexão");
+                        txtVisibilidadeBluetooh.setText("Invisivel, fechado a conexão");
                         break;
                     case BluetoothAdapter.STATE_CONNECTING:
-                        VisibilidadeBluetooh.setText("Conectando...");
+                        txtVisibilidadeBluetooh.setText("Conectando...");
                         break;
                     case BluetoothAdapter.STATE_CONNECTED:
-                        VisibilidadeBluetooh.setText("Conectado");
+                        txtVisibilidadeBluetooh.setText("Conectado");
                         break;
                 }
             }
@@ -145,9 +141,9 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
             final String action = intent.getAction();
 
             if (action.equals(BluetoothDevice.ACTION_FOUND)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                mBTDispositvos.add(device);
-                mDispositivosListAdapter = new DispositivosListAdapter(context, R.layout.dispositivo_adapter_view, mBTDispositvos);
+                BluetoothDevice dispositivo = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                ArrayBTDispositvos.add(dispositivo);
+                mDispositivosListAdapter = new DispositivosListAdapter(context, R.layout.dispositivo_adapter_view, ArrayBTDispositvos);
                 ListNovosDispositivos.setAdapter(mDispositivosListAdapter);
             }
 
@@ -164,15 +160,15 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
                 //3 casos:
                 //caso 1: Já há uma ligação
                 if (mDispositivo.getBondState() == BluetoothDevice.BOND_BONDED) {
-                    receberBroadcast4.setText("Já está pareado");
+                    txtReceberBroadcast4.setText("Já está pareado");
                 }
                 //caso 2: Criando uma ligação
                 if (mDispositivo.getBondState() == BluetoothDevice.BOND_BONDING) {
-                    receberBroadcast4.setText("Criando pareamento");
+                    txtReceberBroadcast4.setText("Criando pareamento");
                 }
                 //caso 3: ligação quebrada
                 if (mDispositivo.getBondState() == BluetoothDevice.BOND_NONE) {
-                    receberBroadcast4.setText("não foi possivel parear");
+                    txtReceberBroadcast4.setText("não foi possivel parear");
                 }
             }
         }
@@ -286,13 +282,13 @@ public class Bluetooth_Activity extends AppCompatActivity implements AdapterView
         //primeiro cancelar a descoberta porque é muito intensivo na memória.
         mBluetoothAdapter.cancelDiscovery();
 
-        String nomeDispositivo = mBTDispositvos.get(i).getName();
+        String nomeDispositivo = ArrayBTDispositvos.get(i).getName();
 
         //criando uma ligação.
         //NOTA: Requer API 17+ (JellyBean)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             Toast.makeText(this, "Tentando emparelhar com " + nomeDispositivo, Toast.LENGTH_SHORT).show();
-            mBTDispositvos.get(i).createBond();
+            ArrayBTDispositvos.get(i).createBond();
         }
     }
 }

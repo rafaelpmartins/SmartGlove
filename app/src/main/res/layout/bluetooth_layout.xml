@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnProcurarDispositivos">
 
         <TextView
-            android:id="@+id/estadoBluetoohTitulo"
+            android:id="@+id/txtEstadoBluetoohTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -78,14 +78,14 @@
             android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/estadoBluetooh"
+            android:id="@+id/txtEstadoBluetooh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/VisibilidadeBluetooh"
+        android:id="@+id/txtVisibilidadeBluetooh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <ListView
-        android:id="@+id/ListNovosDispositivos"
+        android:id="@+id/listNovosDispositivos"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
@@ -126,10 +126,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/VisibilidadeBluetooh"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/txtVisibilidadeBluetooh"></ListView>
 
     <TextView
-        android:id="@+id/receberBroadcast4"
+        android:id="@+id/txtReceberBroadcast4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -139,5 +139,5 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ListNovosDispositivos" />
+        app:layout_constraintTop_toBottomOf="@+id/listNovosDispositivos" />
 </android.support.constraint.ConstraintLayout>
