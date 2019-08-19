@@ -2,6 +2,8 @@ package com.example.smartglove;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,8 @@ public class Bluetooth_Activity extends AppCompatActivity {
     public static int ENABLE_BLUETOOTH = 1;
     public static int SELECT_PAIRED_DEVICE = 2;
     public static int SELECT_DISCOVERED_DEVICE = 3;
+
+    ConnectionThread connect;
 
     static TextView statusMessage;
 
@@ -51,6 +55,8 @@ public class Bluetooth_Activity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 statusMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
                         + data.getStringExtra("btDevAddress"));
+                connect = new ConnectionThread(data.getStringExtra("btDevAddress"));
+                connect.start();
             } else {
                 statusMessage.setText("Nenhum dispositivo selecionado :(");
             }
@@ -72,4 +78,26 @@ public class Bluetooth_Activity extends AppCompatActivity {
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
         startActivity(discoverableIntent);
     }
+
+    public void waitConnection(View view) {
+
+        connect = new ConnectionThread();
+        connect.start();
+    }
+
+    public static Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            Bundle bundle = msg.getData();
+            byte[] data = bundle.getByteArray("data");
+            String dataString= new String(data);
+
+            if(dataString.equals("---N"))
+                statusMessage.setText("Ocorreu um erro durante a conexão D:");
+            else if(dataString.equals("---S"))
+                statusMessage.setText("Conectado :D");
+
+        }
+    };
 }
