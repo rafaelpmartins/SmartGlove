@@ -47,13 +47,11 @@ public class Bluetooth_Activity extends AppCompatActivity {
             } else {
                 statusMessage.setText("Bluetooth não ativado :(");
             }
-        }
-        else if(requestCode == SELECT_PAIRED_DEVICE) {
-            if(resultCode == RESULT_OK) {
+        } else if (requestCode == SELECT_PAIRED_DEVICE || requestCode == SELECT_DISCOVERED_DEVICE) {
+            if (resultCode == RESULT_OK) {
                 statusMessage.setText("Você selecionou " + data.getStringExtra("btDevName") + "\n"
                         + data.getStringExtra("btDevAddress"));
-            }
-            else {
+            } else {
                 statusMessage.setText("Nenhum dispositivo selecionado :(");
             }
         }
@@ -62,5 +60,16 @@ public class Bluetooth_Activity extends AppCompatActivity {
     public void searchPairedDevices(View view) {
         Intent searchPairedDevicesIntent = new Intent(this, PairedDevices.class);
         startActivityForResult(searchPairedDevicesIntent, SELECT_PAIRED_DEVICE);
+    }
+
+    public void discoverDevices(View view) {
+        Intent searchPairedDevicesIntent = new Intent(this, DiscoveredDevices.class);
+        startActivityForResult(searchPairedDevicesIntent, SELECT_DISCOVERED_DEVICE);
+    }
+
+    public void enableVisibility(View view) {
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
+        startActivity(discoverableIntent);
     }
 }
