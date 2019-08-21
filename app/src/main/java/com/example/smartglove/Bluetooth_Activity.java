@@ -1,9 +1,11 @@
 package com.example.smartglove;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +20,7 @@ public class Bluetooth_Activity extends AppCompatActivity {
     public static int SELECT_DISCOVERED_DEVICE = 3;
     ConnectionThread connect;
     static TextView statusMessage;
+    private AlertDialog alerta;
 
     Button button_PairedDevices;
     Button button_DiscoveredDevices;
@@ -70,6 +73,8 @@ public class Bluetooth_Activity extends AppCompatActivity {
         } else {
             statusMessage.setText("Bluetooth já ativado :)");
         }
+
+        dialogBluetooh();
     }
 
     @Override
@@ -110,10 +115,12 @@ public class Bluetooth_Activity extends AppCompatActivity {
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
         startActivity(discoverableIntent);
+
+        button_WaitConnection.setEnabled(true);
     }
 
     public void waitConnection(View view) {
-        Toast.makeText(this, "Servidor", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Aguardando cliente...", Toast.LENGTH_SHORT).show();
 
         connect = new ConnectionThread();
         connect.start();
@@ -125,21 +132,56 @@ public class Bluetooth_Activity extends AppCompatActivity {
 
             Bundle bundle = msg.getData();
             byte[] data = bundle.getByteArray("data");
-            String dataString= new String(data);
+            String dataString = new String(data);
 
-            if(dataString.equals("---N"))
+            if (dataString.equals("---N"))
                 statusMessage.setText("Ocorreu um erro durante a conexão D:");
-            else if(dataString.equals("---S"))
+            else if (dataString.equals("---S"))
                 statusMessage.setText("Conectado :D");
         }
     };
 
     private void findViewById() {
         statusMessage = (TextView) findViewById(R.id.statusMessage);
-        button_PairedDevices = (Button)findViewById(R.id.button_PairedDevices);
-        button_DiscoveredDevices = (Button)findViewById(R.id.button_DiscoveredDevices);
-        button_Visibility = (Button)findViewById(R.id.button_Visibility);
-        button_WaitConnection = (Button)findViewById(R.id.button_WaitConnection);
+        button_PairedDevices = (Button) findViewById(R.id.button_PairedDevices);
+        button_DiscoveredDevices = (Button) findViewById(R.id.button_DiscoveredDevices);
+        button_Visibility = (Button) findViewById(R.id.button_Visibility);
+        button_WaitConnection = (Button) findViewById(R.id.button_WaitConnection);
+    }
+
+    private void dialogBluetooh() {
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //define o titulo
+        builder.setTitle("Bluetooth");
+        //define a mensagem
+        builder.setMessage("Escolha um modo, servidor(espera a conexão de outro dispositivo) ou cliente(faz a solicitação de conexão).");
+        //define um botão como positivo
+        builder.setPositiveButton("Cliente", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                button_Visibility.setVisibility(View.GONE);
+                button_WaitConnection.setVisibility(View.GONE);
+            }
+        });
+        //define um botão como negativo.
+        builder.setNegativeButton("Servidor", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                button_PairedDevices.setVisibility(View.GONE);
+                button_DiscoveredDevices.setVisibility(View.GONE);
+                button_WaitConnection.setEnabled(false);
+            }
+        });
+
+        builder.setNeutralButton("Voltar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        //cria o AlertDialog
+        alerta = builder.create();
+        //Exibe
+        alerta.show();
     }
 
 }
