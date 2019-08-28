@@ -8,9 +8,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -18,10 +23,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
+    List<Esportes> lstEsportes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        lstEsportes = new ArrayList<>();
+        lstEsportes.add(new Esportes(R.drawable.aikido, "Aikido"));
+        lstEsportes.add(new Esportes(R.drawable.boxing_gloves, "Boxe"));
+        lstEsportes.add(new Esportes(R.drawable.karate, "Caratê"));
+        lstEsportes.add(new Esportes(R.drawable.jeet_kune_do, "Jeet Kune Do"));
+        lstEsportes.add(new Esportes(R.drawable.jiu_jitsu, "Jiu-Jitsu"));
+        lstEsportes.add(new Esportes(R.drawable.kicking_boxing, "Kick Boxing"));
+        lstEsportes.add(new Esportes(R.drawable.muai_thay, "Muai Thay"));
+        lstEsportes.add(new Esportes(R.drawable.wing_chun, "Wing Chun"));
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerView);
+        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(getApplicationContext(), lstEsportes);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mRecyclerView.setAdapter(mAdapter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
