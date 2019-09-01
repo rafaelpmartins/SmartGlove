@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_item_two: {
-                Toast.makeText(this, "Menu 2", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Grafico_Activity.class);
+                startActivity(intent);
                 break;
             }
             case R.id.nav_item_three: {
