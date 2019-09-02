@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TemaSemBarra">
-        <activity android:name=".Grafico_Activity"></activity>
+        <activity android:name=".Avalicao_Activity"></activity>
+        <activity android:name=".Grafico_Activity" />
         <activity
             android:name=".SplashScreen_Activity"
             android:label="@string/app_name"

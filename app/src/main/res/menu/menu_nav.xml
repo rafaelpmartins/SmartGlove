@@ -23,16 +23,12 @@
             android:icon="@drawable/ic_import_contacts_dp"
             android:title="Manual" />
     </group>
-    <item android:title="Avaliação">
+    <item android:title="Nos Ajude">
         <menu>
             <item
                 android:id="@+id/nav_item_six"
                 android:icon="@drawable/ic_star_dp"
-                android:title="Avalie" />
-            <item
-                android:id="@+id/nav_item_seven"
-                android:icon="@drawable/ic_share_dp"
-                android:title="Compartilhe" />
+                android:title="Avalie e compartilhe" />
         </menu>
     </item>
 </menu>

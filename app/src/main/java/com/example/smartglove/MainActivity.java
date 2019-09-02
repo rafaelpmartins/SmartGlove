@@ -79,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Menu 4", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.nav_item_six: {
+                Intent intent = new Intent(getApplicationContext(), Avalicao_Activity.class);
+                startActivity(intent);
+                break;
+            }
             default: {
                 Toast.makeText(this, "Menu Default", Toast.LENGTH_SHORT).show();
                 break;
