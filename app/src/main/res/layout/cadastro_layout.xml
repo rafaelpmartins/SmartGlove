@@ -63,6 +63,7 @@
             tools:ignore="MissingConstraints">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/id_edtNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -72,7 +73,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/dataBtn"
+            android:id="@+id/id_btnData"
             android:layout_width="285dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -108,7 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dataBtn"
+            app:layout_constraintTop_toBottomOf="@+id/id_btnData"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -119,17 +120,20 @@
                 android:textColor="@color/VinhoCor" />
 
             <RadioGroup
+                android:id="@+id/id_radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/id_radioMasc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/masculino" />
 
                 <RadioButton
+                    android:id="@+id/id_radioFem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -155,6 +159,7 @@
             tools:ignore="MissingConstraints">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/id_edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_email_dp"
@@ -180,6 +185,7 @@
             app:passwordToggleTint="@color/VinhoCor">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/id_edtSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/senha_cadastro"
@@ -187,7 +193,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/esporteBtn"
+            android:id="@+id/id_btnEsporte"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -224,11 +230,11 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/esporteBtn"
+            app:layout_constraintTop_toBottomOf="@+id/id_btnEsporte"
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/irLogin"
+            android:id="@+id/id_txtLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

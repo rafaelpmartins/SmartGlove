@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,21 +19,38 @@ import java.util.Calendar;
 
 public class Cadastro_Activity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private TextView dataBtn;
-    private TextView esporteBtn;
-    private TextView irLogin;
+    private TextView dataBtn, esporteBtn, txtLogin;
     private Button btnCadastrar;
     private String[] listItems;
     private boolean[] checkedItems;
     private ArrayList<Integer> mUserItems = new ArrayList<>();
+    private RadioGroup radioGroup;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_layout);
 
-        irLogin = (TextView) findViewById(R.id.irLogin);
+        txtLogin = (TextView) findViewById(R.id.id_txtLogin);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        esporteBtn = (Button) findViewById(R.id.id_btnEsporte);
+        dataBtn = (Button) findViewById(R.id.id_btnData);
+        radioGroup = (RadioGroup) findViewById(R.id.id_radioGroup);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.id_radioMasc:
+                        Toast.makeText(getApplicationContext(), "Masculino", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.id_radioFem:
+                        Toast.makeText(getApplicationContext(), "Feminino", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +60,7 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
             }
         });
 
-        irLogin.setOnClickListener(new View.OnClickListener() {
+        txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Login_Activity.class);
@@ -49,15 +68,12 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
             }
         });
 
-        dataBtn = (Button) findViewById(R.id.dataBtn);
         dataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
             }
         });
-
-        esporteBtn = (Button) findViewById(R.id.esporteBtn);
 
         listItems = getResources().getStringArray(R.array.esporte_item);
         checkedItems = new boolean[listItems.length];
