@@ -1,6 +1,7 @@
 package com.example.smartglove;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -35,8 +36,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.imgLivro.setImageResource(mData.get(position).getImagem());
+        holder.imgEsporte.setImageResource(mData.get(position).getImagem());
         holder.tvTituloEsporte.setText(mData.get(position).getTitulo());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, StarTreino_Activity.class);
+                intent.putExtra("Titulo",mData.get(position).getTitulo());
+                mContext.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
 
     @Override
@@ -48,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTituloEsporte;
-        ImageView imgLivro;
+        ImageView imgEsporte;
 
         CardView cardView;
 
@@ -56,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             super(itemView);
 
-            imgLivro = (ImageView) itemView.findViewById(R.id.id_imgEsporte);
+            imgEsporte = (ImageView) itemView.findViewById(R.id.id_imgEsporte);
             tvTituloEsporte = (TextView) itemView.findViewById(R.id.id_txtEsporte);
 
             cardView = (CardView) itemView.findViewById(R.id.idCardView);
