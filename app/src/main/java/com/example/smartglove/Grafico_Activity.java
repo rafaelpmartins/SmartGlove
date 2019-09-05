@@ -38,8 +38,8 @@ public class Grafico_Activity extends AppCompatActivity {
         List zAxisValues = new ArrayList();
 
         //linha 1 e 2
-        Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));//roxo Força
-        Line line2 = new Line(zAxisValues).setColor(Color.parseColor("#00BFFF"));// azul velocidade
+        Line line = new Line(yAxisValues).setColor(Color.parseColor("#B71C1C"));//vermelho Força
+        Line line2 = new Line(zAxisValues).setColor(Color.parseColor("#000000"));// preto velocidade
 
         //adiciona valores percorrendo o vetor
         for (int i = 0; i < axisData.length; i++) {

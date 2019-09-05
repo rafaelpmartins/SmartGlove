@@ -25,7 +25,7 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
     private boolean[] checkedItems;
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private RadioGroup radioGroup;
-
+    private String sexo = "MASCULINO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,11 @@ public class Cadastro_Activity extends AppCompatActivity implements DatePickerDi
                 switch (checkedId) {
                     case R.id.id_radioMasc:
                         Toast.makeText(getApplicationContext(), "Masculino", Toast.LENGTH_SHORT).show();
+                        sexo = "MASCULINO";
                         break;
                     case R.id.id_radioFem:
                         Toast.makeText(getApplicationContext(), "Feminino", Toast.LENGTH_SHORT).show();
+                        sexo = "FEMININO";
                         break;
                 }
             }
