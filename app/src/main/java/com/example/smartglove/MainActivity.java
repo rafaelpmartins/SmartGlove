@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         lstEsportes.add(new Esportes(R.drawable.boxing_gloves, "Boxe"));
         lstEsportes.add(new Esportes(R.drawable.karate, "Caratê"));
         lstEsportes.add(new Esportes(R.drawable.jeet_kune_do, "Jeet Kune Do"));
-        lstEsportes.add(new Esportes(R.drawable.jiu_jitsu, "Jiu-Jitsu"));
+        lstEsportes.add(new Esportes(R.drawable.jiu_jitsu, "Jiu Jitsu"));
         lstEsportes.add(new Esportes(R.drawable.kicking_boxing, "Kick Boxing"));
-        lstEsportes.add(new Esportes(R.drawable.muai_thay, "Muai Thay"));
+        lstEsportes.add(new Esportes(R.drawable.muai_thay, "Muay Thai"));
         lstEsportes.add(new Esportes(R.drawable.wing_chun, "Wing Chun"));
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.id_recyclerView);
