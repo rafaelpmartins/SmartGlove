@@ -22,6 +22,7 @@ public class SplashScreen_Activity extends AppCompatActivity {
         // Esconde tanto a barra de navegação e a barra de status .
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);*/
+        onBackPressed();
     }
 
     private void StartAnimations() {
@@ -52,5 +53,11 @@ public class SplashScreen_Activity extends AppCompatActivity {
                 SplashScreen_Activity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        //super.onBackPressed();
     }
 }
