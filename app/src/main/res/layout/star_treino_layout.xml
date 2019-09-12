@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/BrancoCor"
+    android:background="#FFF"
     tools:context=".StarTreino_Activity">
 
     <TextView
@@ -14,11 +14,93 @@
         android:layout_margin="10dp"
         android:layout_marginTop="16dp"
         android:textAlignment="center"
-        android:textColor="@color/VinhoCor"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtIdTitulo">
+
+        <ProgressBar
+            android:id="@+id/id_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="false"
+            android:progress="0"
+            android:progressDrawable="@drawable/custom_progressbar_drawable"
+            android:secondaryProgress="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Chronometer
+            android:id="@+id/id_chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="32.5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/id_progressBar"
+            app:layout_constraintEnd_toEndOf="@+id/id_progressBar"
+            app:layout_constraintStart_toStartOf="@+id/id_progressBar"
+            app:layout_constraintTop_toTopOf="@+id/id_progressBar" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+        <ImageButton
+            android:id="@+id/id_pause"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/ic_pause_circle_outline_cinza_dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/id_start"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_play_circle_outline_cinza_dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/id_reset"
+            app:layout_constraintStart_toEndOf="@+id/id_pause"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/id_reset"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/ic_replay_cinza_dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

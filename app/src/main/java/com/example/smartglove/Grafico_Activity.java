@@ -3,10 +3,8 @@ package com.example.smartglove;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -18,13 +16,13 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class Grafico_Activity extends AppCompatActivity {
 
     //eixo X
-    String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
+    private String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
 
     //Força valores
-    double[] yAxisData = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1, 18.8, 90.9};
+    private double[] yAxisData = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1, 18.8, 90.9};
 
     //Velocidade valores
-    double[] zAxisData = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60, 90, 70};
+    private double[] zAxisData = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60, 90, 70};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +31,9 @@ public class Grafico_Activity extends AppCompatActivity {
 
         LineChartView lineChartView = findViewById(R.id.chart);
 
-        List yAxisValues = new ArrayList();
-        List axisValues = new ArrayList();
-        List zAxisValues = new ArrayList();
+        ArrayList yAxisValues = new ArrayList();
+        ArrayList axisValues = new ArrayList();
+        ArrayList zAxisValues = new ArrayList();
 
         //linha 1 e 2
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#B71C1C"));// Vermelho Força
