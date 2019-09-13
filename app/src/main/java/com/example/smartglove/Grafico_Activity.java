@@ -1,8 +1,12 @@
 package com.example.smartglove;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+
 import java.util.ArrayList;
 import java.util.List;
 import lecho.lib.hellocharts.model.Axis;
@@ -83,5 +87,29 @@ public class Grafico_Activity extends AppCompatActivity {
         viewport.bottom = 0;
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
+
+        ToolbarBack();
+    }
+
+    private void ToolbarBack() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbarBack);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_dp);
+        getSupportActionBar().setTitle("Graficos");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
