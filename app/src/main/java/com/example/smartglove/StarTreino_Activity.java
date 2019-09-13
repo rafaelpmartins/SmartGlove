@@ -7,8 +7,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -34,8 +32,6 @@ public class StarTreino_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.star_treino_layout);
-
-        ToolbarBack();
 
         txtTitulo = (TextView) findViewById(R.id.txtIdTitulo);
         progressBar = (ProgressBar) findViewById(R.id.id_progressBar);
@@ -236,28 +232,5 @@ public class StarTreino_Activity extends AppCompatActivity {
         });
         alertDialog = builder.create();
         alertDialog.show();
-    }
-
-
-    private void ToolbarBack() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbarBack);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_dp);
-        getSupportActionBar().setTitle("Treinos");
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
