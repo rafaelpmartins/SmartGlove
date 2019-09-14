@@ -191,12 +191,8 @@ public class StarTreino_Activity extends AppCompatActivity {
 
     private void choiceTime() {
         AlertDialog.Builder builder = new AlertDialog.Builder(StarTreino_Activity.this);
+        builder.setCancelable(false);
         builder.setTitle("Tempo de treino");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                alertDialog.dismiss();
-            }
-        });
         builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 switch (item) {
@@ -228,6 +224,7 @@ public class StarTreino_Activity extends AppCompatActivity {
                         progressBar.setMax(100);
                         break;
                 }
+                alertDialog.dismiss();
             }
         });
         alertDialog = builder.create();
