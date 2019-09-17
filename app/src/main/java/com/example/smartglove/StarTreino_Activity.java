@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -14,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StarTreino_Activity extends AppCompatActivity {
+public class StarTreino_Activity extends SairSystem {
 
     private TextView txtTitulo;
     private ProgressBar progressBar;

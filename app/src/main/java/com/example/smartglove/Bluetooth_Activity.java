@@ -1,6 +1,5 @@
 package com.example.smartglove;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class Bluetooth_Activity extends Activity {
+public class Bluetooth_Activity extends SairSystem {
 
     /* Definição dos objetos que serão usados na Activity Principal
         statusMessage mostrará mensagens de status sobre a conexão
@@ -56,7 +55,7 @@ public class Bluetooth_Activity extends Activity {
             O app iniciará e vai automaticamente buscar por esse endereço.
             Caso não encontre, dirá que houve um erro de conexão.
          */
-        connect = new ConnectionThread("00:14:03:18:43:45");
+        connect = new ConnectionThread("98:D3:36:F5:9E:F4");
         connect.start();
 
         /* Um descanso rápido, para evitar bugs esquisitos.

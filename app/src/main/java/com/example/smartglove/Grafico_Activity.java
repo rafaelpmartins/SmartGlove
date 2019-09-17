@@ -1,8 +1,6 @@
 package com.example.smartglove;
 
-
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,7 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
-public class Grafico_Activity extends AppCompatActivity {
+public class Grafico_Activity extends SairSystem {
 
     //eixo X
     private String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
