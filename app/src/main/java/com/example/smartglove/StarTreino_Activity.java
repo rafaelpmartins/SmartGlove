@@ -130,7 +130,7 @@ public class StarTreino_Activity extends SairSystem {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_dp);
-        getSupportActionBar().setTitle("Graficos");
+        getSupportActionBar().setTitle("Treino");
     }
 
     @Override

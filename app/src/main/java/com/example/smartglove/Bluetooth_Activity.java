@@ -1,5 +1,6 @@
 package com.example.smartglove;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
@@ -99,6 +100,7 @@ public class Bluetooth_Activity extends SairSystem {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("HandlerLeak")
     public static Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
