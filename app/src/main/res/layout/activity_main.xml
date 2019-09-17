@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_menu" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/BrancoCor"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="56dp" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView

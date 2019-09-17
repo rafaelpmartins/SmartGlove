@@ -7,11 +7,13 @@
     android:background="@color/BrancoCor"
     tools:context=".Avalicao_Activity">
 
+    <include layout="@layout/toolbar_back" />
+
     <Button
         android:id="@+id/id_BtnRatingBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="72dp"
         android:background="@drawable/botao_nasc"
         android:text="Avaliar"
         android:textAllCaps="false"
