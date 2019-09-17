@@ -1,6 +1,7 @@
 package com.example.smartglove;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Bluetooth_Activity extends SairSystem {
 
@@ -16,6 +18,7 @@ public class Bluetooth_Activity extends SairSystem {
         counterMessage mostrará o valor do contador como recebido do Arduino
         connect é a thread de gerenciamento da conexão Bluetooth
      */
+    public static int ENABLE_BLUETOOTH = 1;
     static TextView statusMessage;
     static TextView counterMessage;
     ConnectionThread connect;
@@ -48,7 +51,13 @@ public class Bluetooth_Activity extends SairSystem {
             faremos isso. Na prática, em um app que vai ser usado por outras
             pessoas, não faça isso.
          */
-        btAdapter.enable();
+        if (!btAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH);
+            Toast.makeText(this, "Solicitando ativação do Bluetooth...", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Bluetooth já ativado :)", Toast.LENGTH_SHORT).show();
+        }
 
         /* Definição da thread de conexão como cliente.
             Aqui, você deve incluir o endereço MAC do seu módulo Bluetooth.
@@ -133,4 +142,19 @@ public class Bluetooth_Activity extends SairSystem {
     public void restartCounter(View view) {
         connect.write("restart\n".getBytes());
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ENABLE_BLUETOOTH) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Bluetooth já ativado :)", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Bluetooth não ativado :(", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
