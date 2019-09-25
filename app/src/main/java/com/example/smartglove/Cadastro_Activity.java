@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +25,16 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private RadioGroup radioGroup;
     private String sexo = "M", date, item;
+    private EditText edtNome, edtEmail, edtSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_layout);
 
+        edtNome = (EditText) findViewById(R.id.id_edtNome);
+        edtEmail = (EditText) findViewById(R.id.id_edtEmail);
+        edtSenha = (EditText) findViewById(R.id.id_edtSenha);
         txt_irLogin = (TextView) findViewById(R.id.id_txtLogin);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
         btnEsporte = (Button) findViewById(R.id.id_btnEsporte);
