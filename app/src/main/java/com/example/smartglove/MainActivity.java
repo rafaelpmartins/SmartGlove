@@ -61,13 +61,11 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_item_one: {
-                Intent intent = new Intent(getApplicationContext(), Bluetooth_Activity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), Bluetooth_Activity.class));
                 break;
             }
             case R.id.nav_item_two: {
-                Intent intent = new Intent(getApplicationContext(), Grafico_Activity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), Grafico_Activity.class));
                 break;
             }
             case R.id.nav_item_three: {
@@ -79,8 +77,7 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
                 break;
             }
             case R.id.nav_item_six: {
-                Intent intent = new Intent(getApplicationContext(), Avalicao_Activity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), Avalicao_Activity.class));
                 break;
             }
             default: {

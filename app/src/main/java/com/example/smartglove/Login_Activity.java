@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class Login_Activity extends SairSystem {
 
-    private TextView irCadastro;
+    private TextView txt_irCadastro;
     private Button btnLogin;
 
     @Override
@@ -16,22 +16,20 @@ public class Login_Activity extends SairSystem {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        irCadastro = (TextView) findViewById(R.id.irCadastro);
+        txt_irCadastro = (TextView) findViewById(R.id.irCadastro);
         btnLogin = (Button) findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
-        irCadastro.setOnClickListener(new View.OnClickListener() {
+        txt_irCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Cadastro_Activity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), Cadastro_Activity.class));
             }
         });
     }

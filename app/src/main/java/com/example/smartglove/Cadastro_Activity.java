@@ -11,28 +11,29 @@ import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Cadastro_Activity extends SairSystem implements DatePickerDialog.OnDateSetListener {
 
-    private TextView dataBtn, esporteBtn, txtLogin;
-    private Button btnCadastrar;
+    private TextView txt_irLogin;
+    private Button btnData, btnEsporte, btnCadastrar;
     private String[] listItems;
     private boolean[] checkedItems;
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private RadioGroup radioGroup;
-    private String sexo = "MASCULINO";
+    private String sexo = "M", date, item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_layout);
 
-        txtLogin = (TextView) findViewById(R.id.id_txtLogin);
+        txt_irLogin = (TextView) findViewById(R.id.id_txtLogin);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
-        esporteBtn = (Button) findViewById(R.id.id_btnEsporte);
-        dataBtn = (Button) findViewById(R.id.id_btnData);
+        btnEsporte = (Button) findViewById(R.id.id_btnEsporte);
+        btnData = (Button) findViewById(R.id.id_btnData);
         radioGroup = (RadioGroup) findViewById(R.id.id_radioGroup);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -40,12 +41,10 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.id_radioMasc:
-                        Toast.makeText(getApplicationContext(), "Masculino", Toast.LENGTH_SHORT).show();
-                        sexo = "MASCULINO";
+                        sexo = "M";
                         break;
                     case R.id.id_radioFem:
-                        Toast.makeText(getApplicationContext(), "Feminino", Toast.LENGTH_SHORT).show();
-                        sexo = "FEMININO";
+                        sexo = "F";
                         break;
                 }
             }
@@ -54,20 +53,18 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
-        txtLogin.setOnClickListener(new View.OnClickListener() {
+        txt_irLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login_Activity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), Login_Activity.class));
             }
         });
 
-        dataBtn.setOnClickListener(new View.OnClickListener() {
+        btnData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
@@ -77,7 +74,7 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
         listItems = getResources().getStringArray(R.array.esporte_item);
         checkedItems = new boolean[listItems.length];
 
-        esporteBtn.setOnClickListener(new View.OnClickListener() {
+        btnEsporte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Cadastro_Activity.this);
@@ -97,16 +94,16 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
                 mBuilder.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
-                        String item = "";
+                        item = "";
                         for (int i = 0; i < mUserItems.size(); i++) {
                             item = item + listItems[mUserItems.get(i)];
                             if (i != mUserItems.size() - 1) {
                                 item = item + ", ";
                             }
                         }
-                        esporteBtn.setText(item);
-                        if (esporteBtn.getText() == "") {
-                            esporteBtn.setText("Adicionar Esporte(s)");
+                        btnEsporte.setText(item);
+                        if (btnEsporte.getText() == "") {
+                            btnEsporte.setText("Adicionar Esporte(s)");
                         }
                     }
                 });
@@ -124,7 +121,7 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
                         for (int i = 0; i < checkedItems.length; i++) {
                             checkedItems[i] = false;
                             mUserItems.clear();
-                            esporteBtn.setText("Adicionar Esporte(s)");
+                            btnEsporte.setText("Adicionar Esporte(s)");
                         }
                     }
                 });
@@ -149,7 +146,7 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         month++;
 
-        String date = dayOfMonth + "/" + month + "/" + year;
-        dataBtn.setText(date);
+        date = dayOfMonth + "/" + month + "/" + year;
+        btnData.setText(date);
     }
 }
