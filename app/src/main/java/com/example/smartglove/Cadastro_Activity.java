@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -32,8 +33,10 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     private boolean[] checkedItems;
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private RadioGroup radioGroup;
-    private String sex = "M", date, item;
+    private String sex = "M", date, item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText edtNome, edtEmail, edtSenha;
+    private int ano;
+    private boolean validarEmail = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +150,7 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     }
 
     public void showDatePickerDialog() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
@@ -159,6 +160,8 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         month++;
+
+        ano = year;
 
         date = dayOfMonth + "/" + month + "/" + year;
         btnData.setText(date);
@@ -171,6 +174,35 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
         String email = edtEmail.getText().toString().trim();
         String senha = edtSenha.getText().toString().trim();
         String esporte = item.trim();
+
+//        if (edtEmail.getText().toString().trim().matches(emailPattern)) {
+//            validarEmail = true;
+//        }
+//        if (TextUtils.isEmpty(nome) || nome.length() > 40 || nome.length() < 3) {
+//            edtNome.setError("Por favor insira um nome válido");
+//            edtNome.requestFocus();
+//            return;
+//        }
+//        if (btnData.getText().equals("Data de Nascimento") || ano > 2009) {
+//            btnData.setError("Por favor insira uma data válida");
+//            btnData.requestFocusFromTouch();
+//            return;
+//        }
+//        if (TextUtils.isEmpty(email) || email.length() > 50 || !validarEmail) {
+//            edtEmail.setError("Por favor insira um email válido");
+//            edtEmail.requestFocus();
+//            return;
+//        }
+//        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30) {
+//            edtSenha.setError("Por favor insira uma de no minimo 8 caracteres");
+//            edtSenha.requestFocus();
+//            return;
+//        }
+//        if (btnEsporte.getText().equals("Adicionar Esporte(s)")) {
+//            btnEsporte.setError("Por favor insira pelo menos um esporte");
+//            btnEsporte.requestFocusFromTouch();
+//            return;
+//        }
 
         HashMap<String, String> params = new HashMap<>();
         params.put("nome", nome);
