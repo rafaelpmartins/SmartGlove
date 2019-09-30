@@ -36,7 +36,8 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     private String sex = "M", date, item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText edtNome, edtEmail, edtSenha;
     private int ano;
-    private boolean validarEmail = false;
+    private boolean validarEmail = false, validarCampos = false;
+    private String nome, data_nasc, sexo, email, senha, esporte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,11 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                createUser();
+                campos();
+                if (validarCampos == true) {
+                    createUser();
+                }
+
             }
         });
 
@@ -168,41 +172,12 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
     }
 
     private void createUser() {
-        String nome = edtNome.getText().toString().trim();
-        String data_nasc = date.trim();
-        String sexo = sex.trim();
-        String email = edtEmail.getText().toString().trim();
-        String senha = edtSenha.getText().toString().trim();
-        String esporte = item.trim();
-
-//        if (edtEmail.getText().toString().trim().matches(emailPattern)) {
-//            validarEmail = true;
-//        }
-//        if (TextUtils.isEmpty(nome) || nome.length() > 40 || nome.length() < 3) {
-//            edtNome.setError("Por favor insira um nome válido");
-//            edtNome.requestFocus();
-//            return;
-//        }
-//        if (btnData.getText().equals("Data de Nascimento") || ano > 2009) {
-//            btnData.setError("Por favor insira uma data válida");
-//            btnData.requestFocusFromTouch();
-//            return;
-//        }
-//        if (TextUtils.isEmpty(email) || email.length() > 50 || !validarEmail) {
-//            edtEmail.setError("Por favor insira um email válido");
-//            edtEmail.requestFocus();
-//            return;
-//        }
-//        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30) {
-//            edtSenha.setError("Por favor insira uma de no minimo 8 caracteres");
-//            edtSenha.requestFocus();
-//            return;
-//        }
-//        if (btnEsporte.getText().equals("Adicionar Esporte(s)")) {
-//            btnEsporte.setError("Por favor insira pelo menos um esporte");
-//            btnEsporte.requestFocusFromTouch();
-//            return;
-//        }
+        nome = edtNome.getText().toString().trim();
+        data_nasc = date.trim();
+        sexo = sex.trim();
+        email = edtEmail.getText().toString().trim();
+        senha = edtSenha.getText().toString().trim();
+        esporte = item.trim();
 
         HashMap<String, String> params = new HashMap<>();
         params.put("nome", nome);
@@ -239,6 +214,7 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), Login_Activity.class));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -258,5 +234,42 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
 
             return null;
         }
+    }
+
+    private void campos() {
+        nome = edtNome.getText().toString().trim();
+        email = edtEmail.getText().toString().trim();
+        senha = edtSenha.getText().toString().trim();
+
+        if (edtEmail.getText().toString().trim().matches(emailPattern)) {
+            validarEmail = true;
+        }
+
+        if (TextUtils.isEmpty(nome) || nome.length() > 40 || nome.length() < 3) {
+            edtNome.setError("Por favor insira um nome válido");
+            edtNome.requestFocus();
+            return;
+        }
+        if (btnData.getText().equals("Data de Nascimento") || ano > 2009) {
+            btnData.setError("Por favor insira uma data válida");
+            btnData.requestFocusFromTouch();
+            return;
+        }
+        if (TextUtils.isEmpty(email) || email.length() > 50 || !validarEmail) {
+            edtEmail.setError("Por favor insira um email válido");
+            edtEmail.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30) {
+            edtSenha.setError("Por favor insira uma de no minimo 8 caracteres");
+            edtSenha.requestFocus();
+            return;
+        }
+        if (btnEsporte.getText().equals("Adicionar Esporte(s)")) {
+            btnEsporte.setError("Por favor insira pelo menos um esporte");
+            btnEsporte.requestFocusFromTouch();
+            return;
+        }
+        validarCampos = true;
     }
 }
