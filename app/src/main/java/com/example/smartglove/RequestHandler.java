@@ -16,8 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class RequestHandler {
 
-    public String sendPostRequest(String requestURL,
-                                  HashMap<String, String> postDataParams) {
+    public String sendPostRequest(String requestURL, HashMap<String, String> postDataParams) {
         //Criando a URL
         URL url;
 

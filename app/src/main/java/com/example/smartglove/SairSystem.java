@@ -3,11 +3,9 @@ package com.example.smartglove;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Handler;
-
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-@SuppressLint("Registered")
 public class SairSystem extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
 

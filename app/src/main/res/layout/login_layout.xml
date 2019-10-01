@@ -60,12 +60,13 @@
             app:layout_constraintVertical_bias="0.098">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/id_edtEmailLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_email_dp"
                 android:drawableRight="@drawable/ic_email_dp"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -87,6 +88,7 @@
             app:passwordToggleTint="@color/VinhoCor">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/id_edtSenhaLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/senha"
@@ -123,14 +125,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="40dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:text="@string/n_o_tem_cadastro"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

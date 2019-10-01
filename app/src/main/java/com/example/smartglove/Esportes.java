@@ -7,12 +7,12 @@ public class Esportes {
     public Esportes() {
     }
 
-    public Esportes(int imagem, String titulo) {
+    Esportes(int imagem, String titulo) {
         this.imagem = imagem;
         this.titulo = titulo;
     }
 
-    public String getTitulo() {
+    String getTitulo() {
         return titulo;
     }
 
@@ -20,7 +20,7 @@ public class Esportes {
         this.titulo = titulo;
     }
 
-    public int getImagem() {
+    int getImagem() {
         return imagem;
     }
 

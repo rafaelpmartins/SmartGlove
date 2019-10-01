@@ -74,7 +74,6 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
                 if (validarCampos == true) {
                     createUser();
                 }
-
             }
         });
 
@@ -217,6 +216,7 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
                     startActivity(new Intent(getApplicationContext(), Login_Activity.class));
                 }
             } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Aconteceu algum erro :(", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }

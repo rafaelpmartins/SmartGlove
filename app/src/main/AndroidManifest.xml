@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TemaSemBarra">
+        <activity android:name=".SairSystem"/>
         <activity android:name=".StarTreino_Activity"/>
         <activity android:name=".Avalicao_Activity" />
         <activity android:name=".Grafico_Activity" />
