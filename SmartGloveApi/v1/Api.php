@@ -72,7 +72,7 @@
 					// se o registro for não, significa que há um erro
 					$response['error'] = true; 
 					// e nós temos a mensagem de erro
-					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+					$response['message'] = 'Email já cadastrado, tente outro';
 				}
 				
 			break; 

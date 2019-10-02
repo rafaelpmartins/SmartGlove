@@ -214,9 +214,11 @@ public class Cadastro_Activity extends SairSystem implements DatePickerDialog.On
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), Login_Activity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Aconteceu algum erro :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Ocorreu algum erro tente mais tarde", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
