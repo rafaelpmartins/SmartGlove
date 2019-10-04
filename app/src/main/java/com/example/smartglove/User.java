@@ -3,18 +3,15 @@ package com.example.smartglove;
 public class User {
 
     private int id;
-    private String nome, data_nasc, sexo, email, senha, espore;
+    private String nome, email, espore;
 
     public User() {
     }
 
-    public User(int id, String nome, String data_nasc, String sexo, String email, String senha, String espore) {
+    public User(int id, String nome, String email, String espore) {
         this.id = id;
         this.nome = nome;
-        this.data_nasc = data_nasc;
-        this.sexo = sexo;
         this.email = email;
-        this.senha = senha;
         this.espore = espore;
     }
 
@@ -34,36 +31,12 @@ public class User {
         this.nome = nome;
     }
 
-    public String getData_nasc() {
-        return data_nasc;
-    }
-
-    public void setData_nasc(String data_nasc) {
-        this.data_nasc = data_nasc;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getEspore() {

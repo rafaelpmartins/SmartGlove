@@ -44,7 +44,7 @@
 			
 			case 'createuser':
 				//primeiro verifique os parâmetros necessários para este pedido estão disponíveis ou não
-				isTheseParametersAvailable(array('nome', 'data_nasc', 'sexo', 'email', 'senha', 'esporte'));
+				isTheseParametersAvailable(array('nome', 'email', 'esporte'));
 				
 				//criando um novo objeto dboperation
 				$db = new DbOperation();
@@ -53,10 +53,7 @@
 				//criando um novo registro no banco de dados
 				$result = $db->createUser(
 					$_POST['nome'],
-					$_POST['data_nasc'],
-					$_POST['sexo'],
 					$_POST['email'],
-					$_POST['senha'],
 					$_POST['esporte']
 				);
 				
@@ -66,7 +63,7 @@
 					$response['error'] = false; 
 					
 					//na mensagem temos uma mensagem de sucesso
-					$response['message'] = 'cadastro realizado com sucesso com successo';
+					$response['message'] = 'cadastro realizado com sucesso';
 
 				}else{
 					// se o registro for não, significa que há um erro

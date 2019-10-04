@@ -24,9 +24,9 @@ class DbOperation
 	* Operação de criação
 	* Quando esse método é chamado, um novo registro é criado no banco de dados
 	*/
-	function createUser($nome, $data_nasc, $sexo, $email, $senha, $esporte){
-		$stmt = $this->con->prepare("INSERT INTO users (nome, data_nasc, sexo, email, senha, esporte) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("ssssss", $nome, $data_nasc, $sexo, $email, $senha, $esporte);
+	function createUser($nome, $email, $esporte){
+		$stmt = $this->con->prepare("INSERT INTO users (nome, email, esporte) VALUES (?, ?, ?)");
+		$stmt->bind_param("sss", $nome, $email, $esporte);
 		if($stmt->execute())
 			return true; 
 		return false; 

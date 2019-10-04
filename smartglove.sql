@@ -1,12 +1,9 @@
 create table users(
-id_user int not null auto_increment,
-nome varchar(40),
-data_nasc varchar(10),
-sexo char(1),
-email varchar(50) UNIQUE,
-senha varchar(30),
+id int not null auto_increment,
+nome varchar(20),
+email varchar(40) UNIQUE,
 esporte varchar(200),
-primary key(id_user)
+primary key(id)
 );
 
 create table treino(
@@ -16,4 +13,4 @@ dado_acelerometro int,
 primary key(id_treino)
 );
 
-insert into users (nome, data_nasc, sexo, email, senha, esporte)values("rafael", "25/06/1998", "M", "rafael@etec.com", "123456789", "Aikido");
+insert into users (nome, email, esporte)values("rafael", "rafael@etec.com", "Aikido");

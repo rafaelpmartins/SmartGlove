@@ -28,7 +28,7 @@ public class SplashScreen_Activity extends AppCompatActivity {
     private void StartAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
-        @SuppressLint("WrongViewCast") LinearLayout l = (LinearLayout) findViewById(R.id.Login_layout);
+        @SuppressLint("WrongViewCast") LinearLayout l = (LinearLayout) findViewById(R.id.cadastro_layout);
         if (l != null) {
             l.clearAnimation();
             l.startAnimation(anim);
@@ -47,7 +47,7 @@ public class SplashScreen_Activity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen_Activity.this, Login_Activity.class);
+                Intent intent = new Intent(SplashScreen_Activity.this, Cadastro_Activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 SplashScreen_Activity.this.finish();

@@ -7,4 +7,5 @@
     <color name="BrancoCor">#fff</color>
     <color name="PretoCor">#000</color>
     <color name="CinzaClaroCor">#f5f5f5</color>
+    <color name="dialogButtonText">#B71C1C</color>
 </resources>

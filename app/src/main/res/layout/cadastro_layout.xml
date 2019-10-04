@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cadastro_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -42,20 +43,21 @@
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/nomeEdt"
             android:layout_width="300dp"
             android:layout_height="85dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
@@ -70,81 +72,13 @@
                 android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/id_btnData"
-            android:layout_width="285dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/botao_nasc"
-            android:drawableEnd="@drawable/ic_date_range_dp"
-            android:drawableRight="@drawable/ic_date_range_dp"
-            android:padding="5dp"
-            android:text="@string/data_de_nascimento"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/VinhoCor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomeEdt" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:orientation="vertical"
-            android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.489"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_btnData">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/g_nero"
-                android:textColor="@color/VinhoCor" />
-
-            <RadioGroup
-                android:id="@+id/id_radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/id_radioMasc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/masculino" />
-
-                <RadioButton
-                    android:id="@+id/id_radioFem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/feminino" />
-            </RadioGroup>
-        </LinearLayout>
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/emailEdtCadastro"
             android:layout_width="300dp"
             android:layout_height="85dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:focusable="true"
@@ -152,7 +86,7 @@
             android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/nomeEdt">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/id_edtEmail"
@@ -164,31 +98,6 @@
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/senhaEdtCadastro"
-            android:layout_width="300dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailEdtCadastro"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/VinhoCor">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/id_edtSenha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/senha_cadastro"
-                android:inputType="textPassword" />
-        </android.support.design.widget.TextInputLayout>
-
         <Button
             android:id="@+id/id_btnEsporte"
             android:layout_width="280dp"
@@ -196,7 +105,7 @@
             android:layout_gravity="start"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/botao_nasc"
@@ -209,24 +118,23 @@
             android:textColor="@color/VinhoCor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/senhaEdtCadastro" />
+            app:layout_constraintTop_toBottomOf="@+id/emailEdtCadastro" />
 
         <Button
             android:id="@+id/btnCadastrar"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/botao_login"
             android:text="@string/cadastrar"
             android:textColor="@color/BrancoCor"
             android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/id_txtLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_btnEsporte" />
+            app:layout_constraintTop_toBottomOf="@+id/id_btnEsporte"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/id_txtLogin"
@@ -234,20 +142,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="24dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:text="@string/j_tem_cadastro"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnCadastrar"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
