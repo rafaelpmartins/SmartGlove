@@ -44,7 +44,7 @@
 			
 			case 'createuser':
 				//primeiro verifique os parâmetros necessários para este pedido estão disponíveis ou não
-				isTheseParametersAvailable(array('nome', 'email', 'esporte'));
+				isTheseParametersAvailable(array('nome', 'email', 'senha', 'esporte'));
 				
 				//criando um novo objeto dboperation
 				$db = new DbOperation();
@@ -54,6 +54,7 @@
 				$result = $db->createUser(
 					$_POST['nome'],
 					$_POST['email'],
+					$_POST['senha'],
 					$_POST['esporte']
 				);
 				
@@ -72,7 +73,14 @@
 					$response['message'] = 'Email já cadastrado, tente outro';
 				}
 				
-			break; 
+			break;
+
+			case 'getsenha':
+				$db = new DbOperation();
+				$response['error'] = false; 
+				$response['message'] = 'Bem vindo de volta';
+				$response['users'] = $db->getSenha();
+			break; 	
 		}
 		
 	}else{

@@ -3,15 +3,20 @@ package com.example.smartglove;
 public class User {
 
     private int id;
-    private String nome, email, espore;
+    private String nome, email, senha, espore;
 
     public User() {
     }
 
-    public User(int id, String nome, String email, String espore) {
+    public User(String senha) {
+        this.senha = senha;
+    }
+
+    public User(int id, String nome, String email, String senha, String espore) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.senha = senha;
         this.espore = espore;
     }
 
@@ -37,6 +42,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getEspore() {

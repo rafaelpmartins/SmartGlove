@@ -8,4 +8,5 @@ public class Api {
     //Variáveis estáticas e globais para acesso os métodos no WEB Service
 
     public static final String URL_CREATE_USER = ROOT_URL + "createuser";
+    public static final String URL_GET_SENHA = ROOT_URL + "getsenha";
 }

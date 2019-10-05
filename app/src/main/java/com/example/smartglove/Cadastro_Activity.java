@@ -1,5 +1,6 @@
 package com.example.smartglove;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,16 +13,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Cadastro_Activity extends SairSystem {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
+    @SuppressLint("StaticFieldLeak")
+    private static EditText edtLogin = null;
 
     private TextView txt_irLogin;
     private Button btnEsporte, btnCadastrar;
@@ -29,9 +34,11 @@ public class Cadastro_Activity extends SairSystem {
     private boolean[] checkedItems;
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private String item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private EditText edtNome, edtEmail;
-    private boolean validarEmail = false, validarCampos = false;
-    private String nome, email, esporte;
+    private EditText edtNome, edtEmail, edtSenha;
+    private boolean validarEmail = false, validarCampos = false, validarCadastro = false;
+    private String nome, email, senha, esporte;
+
+    List<User> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,9 @@ public class Cadastro_Activity extends SairSystem {
         txt_irLogin = (TextView) findViewById(R.id.id_txtLogin);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
         btnEsporte = (Button) findViewById(R.id.id_btnEsporte);
+        edtSenha = (EditText) findViewById(R.id.id_edtSenha);
 
+        userList = new ArrayList<>();
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +60,9 @@ public class Cadastro_Activity extends SairSystem {
                 campos();
                 if (validarCampos == true) {
                     createUser();
+                    if (validarCadastro == true) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
                 }
             }
         });
@@ -126,15 +138,42 @@ public class Cadastro_Activity extends SairSystem {
     private void createUser() {
         nome = edtNome.getText().toString().trim();
         email = edtEmail.getText().toString().trim();
+        senha = edtSenha.getText().toString().trim();
         esporte = item.trim();
 
         HashMap<String, String> params = new HashMap<>();
         params.put("nome", nome);
         params.put("email", email);
+        params.put("senha", senha);
         params.put("esporte", esporte);
 
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_USER, params, CODE_POST_REQUEST);
         request.execute();
+
+        validarCadastro = true;
+    }
+
+    private void readEmail() {
+        PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_GET_SENHA, null, CODE_GET_REQUEST);
+        request.execute();
+    }
+
+    private void refreshUserList(JSONArray users) throws JSONException {
+        userList.clear();
+
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject obj = users.getJSONObject(i);
+
+            userList.add(new User(
+                    obj.getString("senha")
+            ));
+
+            String login = edtLogin.getText().toString().trim();
+
+            if (obj.getString("senha").equals(login)) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        }
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
@@ -160,12 +199,11 @@ public class Cadastro_Activity extends SairSystem {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    refreshUserList(object.getJSONArray("users"));
                 } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Ocorreu algum erro tente mais tarde", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
@@ -188,6 +226,7 @@ public class Cadastro_Activity extends SairSystem {
     private void campos() {
         nome = edtNome.getText().toString().trim();
         email = edtEmail.getText().toString().trim();
+        senha = edtSenha.getText().toString().trim();
 
         if (edtEmail.getText().toString().trim().matches(emailPattern)) {
             validarEmail = true;
@@ -203,6 +242,11 @@ public class Cadastro_Activity extends SairSystem {
             edtEmail.requestFocus();
             return;
         }
+        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30) {
+            edtSenha.setError("Por favor insira uma de no minimo 8 caracteres");
+            edtSenha.requestFocus();
+            return;
+        }
         if (btnEsporte.getText().equals("Adicionar Esporte(s)")) {
             btnEsporte.setError("Por favor insira pelo menos um esporte");
             btnEsporte.requestFocusFromTouch();
@@ -214,26 +258,28 @@ public class Cadastro_Activity extends SairSystem {
     public void showAlertDialogButtonClicked(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
-        builder.setTitle("Email");
+        builder.setTitle("Senha");
 
         final View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog, null);
         builder.setView(customLayout);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Entrar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                edtLogin = customLayout.findViewById(R.id.editText);
+                String login = edtLogin.getText().toString().trim();
 
-                EditText editText = customLayout.findViewById(R.id.editText);
-                String login = editText.getText().toString().trim();
                 if (TextUtils.isEmpty(login)) {
                     Toast.makeText(getApplicationContext(), "Está Vazio", Toast.LENGTH_SHORT).show();
+                } else if (login.length() < 8) {
+                    Toast.makeText(getApplicationContext(), "Senha invalida", Toast.LENGTH_SHORT).show();
                 } else {
-                    sendDialogDataToActivity(editText.getText().toString().trim());
+                    readEmail();
                 }
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -242,10 +288,5 @@ public class Cadastro_Activity extends SairSystem {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-
-    private void sendDialogDataToActivity(String data) {
-        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
 }
