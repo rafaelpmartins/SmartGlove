@@ -58,6 +58,7 @@
 					$_POST['esporte']
 				);
 				
+				
 				// se o registro for criado com sucesso
 				if($result){
 					//registro é criado significa que não há erro
@@ -78,7 +79,7 @@
 			case 'getsenha':
 				$db = new DbOperation();
 				$response['error'] = false; 
-				$response['message'] = 'Bem vindo de volta';
+				$response['message'] = 'Buscando...';
 				$response['users'] = $db->getSenha();
 			break; 	
 		}

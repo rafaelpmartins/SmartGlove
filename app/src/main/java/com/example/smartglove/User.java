@@ -8,7 +8,7 @@ public class User {
     public User() {
     }
 
-    public User(String senha) {
+    User(String senha) {
         this.senha = senha;
     }
 

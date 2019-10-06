@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +21,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class Cadastro_Activity extends SairSystem {
+public class Cadastro_Activity extends AppCompatActivity {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
@@ -35,7 +38,7 @@ public class Cadastro_Activity extends SairSystem {
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private String item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText edtNome, edtEmail, edtSenha;
-    private boolean validarEmail = false, validarCampos = false, validarCadastro = false;
+    private boolean validarEmail = false, validarCampos = false, validarSenha = false;
     private String nome, email, senha, esporte;
 
     List<User> userList;
@@ -60,9 +63,6 @@ public class Cadastro_Activity extends SairSystem {
                 campos();
                 if (validarCampos == true) {
                     createUser();
-                    if (validarCadastro == true) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
                 }
             }
         });
@@ -149,8 +149,6 @@ public class Cadastro_Activity extends SairSystem {
 
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_USER, params, CODE_POST_REQUEST);
         request.execute();
-
-        validarCadastro = true;
     }
 
     private void readEmail() {
@@ -172,6 +170,7 @@ public class Cadastro_Activity extends SairSystem {
 
             if (obj.getString("senha").equals(login)) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Toast.makeText(getApplicationContext(), "Bem vindo, de volta", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -199,11 +198,15 @@ public class Cadastro_Activity extends SairSystem {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    if (object.getString("message").equals("cadastro realizado com sucesso")) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
                     refreshUserList(object.getJSONArray("users"));
                 } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Sem conexão Internet", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
@@ -232,6 +235,10 @@ public class Cadastro_Activity extends SairSystem {
             validarEmail = true;
         }
 
+        if (isValidPassword(edtSenha.getText().toString().trim())) {
+            validarSenha = true;
+        }
+
         if (TextUtils.isEmpty(nome) || nome.length() > 20 || nome.length() < 3) {
             edtNome.setError("Por favor insira um nome válido");
             edtNome.requestFocus();
@@ -242,8 +249,8 @@ public class Cadastro_Activity extends SairSystem {
             edtEmail.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30) {
-            edtSenha.setError("Por favor insira uma de no minimo 8 caracteres");
+        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30 || validarSenha == false) {
+            edtSenha.setError("A senha deve ter no minimo 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial(@,$,%,&,#)");
             edtSenha.requestFocus();
             return;
         }
@@ -288,5 +295,18 @@ public class Cadastro_Activity extends SairSystem {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 }
