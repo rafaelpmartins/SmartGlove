@@ -16,7 +16,6 @@
 			}
 		}
 		
-		
 		//se os parâmetros estiverem faltando
 		if(!$available){
 			$response = array(); 
@@ -44,15 +43,15 @@
 			
 			case 'createuser':
 				//primeiro verifique os parâmetros necessários para este pedido estão disponíveis ou não
-				isTheseParametersAvailable(array('nome', 'email', 'senha', 'esporte'));
+				isTheseParametersAvailable(array('nome', 'peso', 'email', 'senha', 'esporte'));
 				
 				//criando um novo objeto dboperation
 				$db = new DbOperation();
 				
-				
 				//criando um novo registro no banco de dados
 				$result = $db->createUser(
 					$_POST['nome'],
+					$_POST['peso'],
 					$_POST['email'],
 					$_POST['senha'],
 					$_POST['esporte']
@@ -73,15 +72,8 @@
 					// e nós temos a mensagem de erro
 					$response['message'] = 'Email já cadastrado, tente outro';
 				}
-				
 			break;
 
-			case 'getsenha':
-				$db = new DbOperation();
-				$response['error'] = false; 
-				$response['message'] = 'Buscando...';
-				$response['users'] = $db->getSenha();
-			break; 	
 		}
 		
 	}else{

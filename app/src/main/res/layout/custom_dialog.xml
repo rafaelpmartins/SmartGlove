@@ -8,18 +8,27 @@
     android:paddingRight="20dp">
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/emailEdtCadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/id_edtEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/VinhoCor">
 
-        <EditText
-            android:id="@+id/editText"
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/id_edtSenhaLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-
     </android.support.design.widget.TextInputLayout>
-
-
 </LinearLayout>
