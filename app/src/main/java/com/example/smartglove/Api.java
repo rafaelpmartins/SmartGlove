@@ -6,6 +6,7 @@ public class Api {
     private static final String ROOT_URL = "http://192.168.15.8/SmartGloveApi/v1/Api.php?apicall=";
 
     //Variáveis estáticas e globais para acesso os métodos no WEB Service
-
     public static final String URL_CREATE_USER = ROOT_URL + "createuser";
+    public static final String URL_LOGIN_USER = ROOT_URL + "loginuser";
+    public static final String URL_LOADING_USER = ROOT_URL + "loadinguser";
 }

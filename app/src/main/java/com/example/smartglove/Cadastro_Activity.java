@@ -1,6 +1,5 @@
 package com.example.smartglove;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,10 +26,6 @@ public class Cadastro_Activity extends AppCompatActivity {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-    @SuppressLint("StaticFieldLeak")
-    private static EditText edtEmailLogin = null;
-    @SuppressLint("StaticFieldLeak")
-    private static EditText edtSenhaLogin = null;
 
     private TextView txt_irLogin;
     private Button btnEsporte, btnCadastrar;
@@ -38,9 +33,9 @@ public class Cadastro_Activity extends AppCompatActivity {
     private boolean[] checkedItems;
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private String item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private EditText edtNome, edtPeso, edtEmail, edtSenha;
+    private EditText edtNome, edtPeso, edtEmail, edtSenha, edtEmailLogin, edtSenhaLogin;
     private boolean validarEmail = false, validarCampos = false, validarSenha = false, validarPeso = false;
-    private String nome, peso, email, senha, esporte;
+    private String nome, peso, email, senha, esporte, EmailLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +170,19 @@ public class Cadastro_Activity extends AppCompatActivity {
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     if (object.getString("message").equals("cadastro realizado com sucesso")) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Bundle infoNome = new Bundle();
+                        infoNome.putString("chave_email", email);
+                        intent.putExtras(infoNome);
+                        startActivity(intent);
+                    }
+
+                    if (object.getString("message").equals("logado")) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Bundle infoNome = new Bundle();
+                        infoNome.putString("chave_email", EmailLogin);
+                        intent.putExtras(infoNome);
+                        startActivity(intent);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
@@ -261,10 +268,23 @@ public class Cadastro_Activity extends AppCompatActivity {
                 edtEmailLogin = customLayout.findViewById(R.id.id_edtEmailLogin);
                 edtSenhaLogin = customLayout.findViewById(R.id.id_edtSenhaLogin);
 
-                String EmailLogin = edtEmailLogin.getText().toString().trim();
+                EmailLogin = edtEmailLogin.getText().toString().trim();
                 String SenhaLogin = edtSenhaLogin.getText().toString().trim();
 
-                Toast.makeText(getApplicationContext(), EmailLogin + SenhaLogin, Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(EmailLogin)) {
+                    Toast.makeText(getApplicationContext(), "Email vazio", Toast.LENGTH_SHORT).show();
+                }
+                if (TextUtils.isEmpty(SenhaLogin)) {
+                    Toast.makeText(getApplicationContext(), "Senha vazio", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("email", EmailLogin);
+                    params.put("senha", SenhaLogin);
+
+                    PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_LOGIN_USER, params, CODE_POST_REQUEST);
+                    request.execute();
+                }
             }
         });
 
@@ -297,7 +317,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String WEIGHT_PATTERN = "^([1-9][0-9]|[0-9])$";
+        final String WEIGHT_PATTERN = "^([1-9][0-9]?[0-9])$";
 
         pattern = Pattern.compile(WEIGHT_PATTERN);
         matcher = pattern.matcher(weight);

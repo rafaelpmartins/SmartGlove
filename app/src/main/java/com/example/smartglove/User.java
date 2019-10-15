@@ -17,6 +17,12 @@ public class User {
         this.espore = espore;
     }
 
+    public User(String nome, String email, String espore) {
+        this.nome = nome;
+        this.email = email;
+        this.espore = espore;
+    }
+
     public int getId() {
         return id;
     }

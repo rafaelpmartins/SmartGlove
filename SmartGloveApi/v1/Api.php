@@ -57,7 +57,6 @@
 					$_POST['esporte']
 				);
 				
-				
 				// se o registro for criado com sucesso
 				if($result){
 					//registro é criado significa que não há erro
@@ -72,6 +71,44 @@
 					// e nós temos a mensagem de erro
 					$response['message'] = 'Email já cadastrado, tente outro';
 				}
+			break;
+
+			case 'loginuser':
+			
+				isTheseParametersAvailable(array('email', 'senha'));
+				$db = new DbOperation();
+				
+				//criando um novo registro no banco de dados
+				$result = $db->loginUser($_POST['email']);
+
+				if($result){
+					//registro é criado significa que não há erro
+					$response['error'] = false; 
+					
+					//na mensagem temos uma mensagem de sucesso
+					if($_POST['senha'] == $result){
+
+						$response['message'] = 'logado';
+					}
+					else{
+						$response['message'] = 'senha incorreta';
+
+					}
+				}
+				else{
+					// se o registro for não, significa que há um erro
+					$response['error'] = "true"; 
+					// e nós temos a mensagem de erro
+					$response['message'] = "Usuário não existente";
+				}
+			break;
+
+			case 'loadinguser':
+			
+				isTheseParametersAvailable(array('email'));
+				$db = new DbOperation();
+				
+				$response['datas'] = $db->loadingUser($_POST['email']);
 			break;
 
 		}

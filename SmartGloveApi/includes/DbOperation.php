@@ -13,7 +13,6 @@ class DbOperation
  
         // Criando um objeto DbConnect para se conectar ao banco de dados
         $db = new DbConnect();
- 
         
 		// Inicializando o link de conexão
         // chamando o método connect da classe DbConnect
@@ -31,5 +30,38 @@ class DbOperation
 			return true; 
 		return false; 
 	}
+
+	function loginuser($email){
+		$stmt = $this->con->prepare("SELECT senha FROM users WHERE email LIKE '$email'");
+		$stmt->execute();
+		$stmt->bind_result($senha);
+
+		$password = "";
+
+		while($stmt->fetch()){
+			$password = $senha;
+		}
+
+		return $password; 
+	}
+
+	function loadinguser($email){
+		$stmt = $this->con->prepare("SELECT nome, email, esporte FROM users WHERE email LIKE '$email'");
+		$stmt->execute();
+		$stmt->bind_result($nome, $email, $esporte);
+
+		$datas = array();
+
+		while($stmt->fetch()){
+			$data = array();	
+			$data['nome'] = $nome;
+			$data['email'] = $email;
+			$data['esporte'] = $esporte;
+			array_push($datas, $data);	
+		}
+
+		return $datas; 
+	}
+
 
 }

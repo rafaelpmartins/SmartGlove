@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="176dp"
@@ -8,7 +8,8 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/nav_header_imageView"
@@ -17,18 +18,18 @@
         android:src="@mipmap/ic_launcher_round" />
 
     <TextView
-        android:id="@+id/nav_header_textView"
-        android:textColor="@color/PretoCor"
+        android:id="@+id/id_nomeMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:text="Smart Glove"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/PretoCor" />
 
     <TextView
-        android:id="@+id/nav_header_textView2"
-        android:textColor="@color/PretoCor"
+        android:id="@+id/id_emailMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="info@smartglove.com"/>
+        android:text="info@smartglove.com"
+        android:textColor="@color/PretoCor" />
 </LinearLayout>
