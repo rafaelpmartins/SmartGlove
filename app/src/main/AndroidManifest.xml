@@ -4,32 +4,37 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/TemaSemBarra">
-        <activity android:name=".SairSystem"/>
-        <activity android:name=".StarTreino_Activity"/>
+        android:theme="@style/TemaSemBarra"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Configuracoes_Activity"></activity>
+        <activity android:name=".SairSystem" />
+        <activity android:name=".StarTreino_Activity" />
         <activity android:name=".Avalicao_Activity" />
         <activity android:name=".Grafico_Activity" />
-        <activity android:name=".SplashScreen_Activity" android:label="@string/app_name" android:theme="@style/TemaSemBarra">
+        <activity
+            android:name=".SplashScreen_Activity"
+            android:label="@string/app_name"
+            android:theme="@style/TemaSemBarra">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Bluetooth_Activity" />
         <activity android:name=".Cadastro_Activity" />
         <activity android:name=".Login_Activity" />
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

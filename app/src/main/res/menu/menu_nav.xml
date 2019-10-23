@@ -3,30 +3,22 @@
     <group>
         <item
             android:id="@+id/nav_item_one"
-            android:icon="@drawable/ic_bluetooth_dp"
-            android:title="bluetooth" />
-        <item
-            android:id="@+id/nav_item_two"
             android:icon="@drawable/ic_show_chart_dp"
             android:title="Graficos" />
         <item
-            android:id="@+id/nav_item_three"
-            android:icon="@drawable/ic_file_download_dp"
-            android:title="Download" />
-    </group>
-    <group android:id="@+id/group_menu">
-        <item
-            android:id="@+id/nav_item_four"
+            android:id="@+id/nav_item_two"
             android:icon="@drawable/ic_settings_dp"
             android:title="Configurações" />
         <item
+            android:id="@+id/nav_item_three"
             android:icon="@drawable/ic_import_contacts_dp"
             android:title="Manual" />
     </group>
+
     <item android:title="Nos Ajude">
         <menu>
             <item
-                android:id="@+id/nav_item_six"
+                android:id="@+id/nav_item_four"
                 android:icon="@drawable/ic_star_dp"
                 android:title="Avalie e compartilhe" />
         </menu>

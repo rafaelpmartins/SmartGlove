@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BrancoCor"
+    tools:context=".Configuracoes_Activity">
+
+    <include layout="@layout/toolbar_back" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:gravity="center_horizontal"
+        android:text="Informações pessoais"
+        android:textColor="@color/PretoCor"
+        android:textSize="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <LinearLayout
+        android:id="@+id/id_linearNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/alterar_borda"
+        android:clickable="true"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <TextView
+            android:id="@+id/id_txtNomeUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:textSize="20dp"
+            android:textColor="@color/PretoCor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/id_linearPeso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/alterar_borda"
+        android:clickable="true"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_linearNome">
+
+        <TextView
+            android:id="@+id/id_txtPesoUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peso"
+            android:textSize="20dp"
+            android:textColor="@color/PretoCor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/id_linearEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/alterar_borda"
+        android:clickable="true"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_linearPeso">
+
+        <TextView
+            android:id="@+id/id_txtEmailUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="20dp"
+            android:textColor="@color/PretoCor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/id_linearSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/alterar_borda"
+        android:clickable="true"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_linearEmail">
+
+        <TextView
+            android:id="@+id/id_txtSenhaUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Senha"
+            android:textSize="20dp"
+            android:textColor="@color/PretoCor"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_btnEsporteUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:padding="5dp"
+        android:background="@drawable/alterar_borda"
+        android:text="@string/adicionar_esportes"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_linearSenha" />
+
+    <Button
+        android:id="@+id/id_btnAlterar"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/botao_login"
+        android:text="Alterar"
+        android:textColor="@color/BrancoCor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

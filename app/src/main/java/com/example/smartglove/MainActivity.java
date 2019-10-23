@@ -49,15 +49,9 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
         View headerView = navigationView.getHeaderView(0);
         nomeMenu = (TextView) headerView.findViewById(R.id.id_nomeMenu);
         emailMenu = (TextView) headerView.findViewById(R.id.id_emailMenu);
-        nomeMenu.setText("batata");
-        emailMenu.setText("batata@batata");
 
-        Intent intentRecebe = getIntent();
-        Bundle infoNome = intentRecebe.getExtras();
-        usuario = infoNome.getString("chave_email");
-
-        loading();
-        readDatas();
+//        loading();
+//        readDatas();
 
         userList = new ArrayList<>();
 
@@ -78,22 +72,18 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_item_one: {
-                startActivity(new Intent(getApplicationContext(), Bluetooth_Activity.class));
-                break;
-            }
-            case R.id.nav_item_two: {
                 startActivity(new Intent(getApplicationContext(), Grafico_Activity.class));
                 break;
             }
+            case R.id.nav_item_two: {
+                startActivity(new Intent(getApplicationContext(), Configuracoes_Activity.class));
+                break;
+            }
             case R.id.nav_item_three: {
-                Toast.makeText(this, "Menu 3", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Manual", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.nav_item_four: {
-                Toast.makeText(this, "Menu 4", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.nav_item_six: {
                 startActivity(new Intent(getApplicationContext(), Avalicao_Activity.class));
                 break;
             }

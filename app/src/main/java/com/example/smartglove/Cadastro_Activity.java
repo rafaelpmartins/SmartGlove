@@ -53,10 +53,11 @@ public class Cadastro_Activity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                campos();
-                if (validarCampos == true) {
-                    createUser();
-                }
+//                campos();
+//                if (validarCampos == true) {
+//                    createUser();
+//                }
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
@@ -222,9 +223,9 @@ public class Cadastro_Activity extends AppCompatActivity {
             validarPeso = true;
         }
 
-        if (isValidPassword(edtSenha.getText().toString().trim())) {
-            validarSenha = true;
-        }
+//        if (isValidPassword(edtSenha.getText().toString().trim())) {
+//            validarSenha = true;
+//        }
 
         if (TextUtils.isEmpty(nome) || nome.length() > 20 || nome.length() < 3) {
             edtNome.setError("Por favor insira um nome válido");
@@ -241,8 +242,8 @@ public class Cadastro_Activity extends AppCompatActivity {
             edtEmail.requestFocus();
             return;
         }
-        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30 || validarSenha == false) {
-            edtSenha.setError("A senha deve ter no minimo 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caracter especial(@,$,%,&,#)");
+        if (TextUtils.isEmpty(senha) || senha.length() < 8 || senha.length() > 30) {
+            edtSenha.setError("A senha deve ter no minimo 8 caracteres");
             edtSenha.requestFocus();
             return;
         }
@@ -259,7 +260,7 @@ public class Cadastro_Activity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
         builder.setTitle("Email & Senha");
 
-        final View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+        final View customLayout = getLayoutInflater().inflate(R.layout.custom_dialog_login, null);
         builder.setView(customLayout);
 
         builder.setPositiveButton("Entrar", new DialogInterface.OnClickListener() {
@@ -297,19 +298,6 @@ public class Cadastro_Activity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    private boolean isValidPassword(final String password) {
-
-        Pattern pattern;
-        Matcher matcher;
-
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
-
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-
-        return matcher.matches();
     }
 
     private boolean isValidweight(final String weight) {
