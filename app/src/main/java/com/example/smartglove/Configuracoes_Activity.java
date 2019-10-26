@@ -1,13 +1,15 @@
 package com.example.smartglove;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,13 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Configuracoes_Activity extends AppCompatActivity {
 
-    private Button btnEsporteupdate, btnAlterar;
+    private Button btnEsporteupdate;
     private TextView txtNomeUpdate, txtPesoUpdate, txtEmailUpdate, txtSenhaUpdate;
     private LinearLayout linearNome, linearPeso, linearEmail, linearSenha;
     private String[] listItems;
@@ -30,14 +38,27 @@ public class Configuracoes_Activity extends AppCompatActivity {
     private String item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText edtNomeUpdate, edtPesoUpdate, edtEmailUpdate, edtSenhaUpdate;
     private boolean validarPeso = false, validarEmail = false;
+    private int recebeID;
+    private static final int CODE_GET_REQUEST = 1024;
+    private static final int CODE_POST_REQUEST = 1025;
+    static String recebeEsporte;
+    List<User> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracoes_layout);
 
+        Intent intentRecebe = getIntent();
+        Bundle infoNome = intentRecebe.getExtras();
+        recebeID = infoNome.getInt("chave_id");
+
+        readDats();
+        alterUser();
+
+        userList = new ArrayList<>();
+
         btnEsporteupdate = (Button) findViewById(R.id.id_btnEsporteUpdate);
-        btnAlterar = (Button) findViewById(R.id.id_btnAlterar);
         txtNomeUpdate = (TextView) findViewById(R.id.id_txtNomeUpdate);
         txtPesoUpdate = (TextView) findViewById(R.id.id_txtPesoUpdate);
         txtEmailUpdate = (TextView) findViewById(R.id.id_txtEmailUpdate);
@@ -46,12 +67,6 @@ public class Configuracoes_Activity extends AppCompatActivity {
         linearPeso = (LinearLayout) findViewById(R.id.id_linearPeso);
         linearEmail = (LinearLayout) findViewById(R.id.id_linearEmail);
         linearSenha = (LinearLayout) findViewById(R.id.id_linearSenha);
-
-        txtNomeUpdate.setText("Nome");
-        txtPesoUpdate.setText("Peso");
-        txtEmailUpdate.setText("Email");
-        txtSenhaUpdate.setText("Senha");
-        btnEsporteupdate.setText("Adicionar Esportes(s)");
 
         ToolbarBack();
 
@@ -83,13 +98,6 @@ public class Configuracoes_Activity extends AppCompatActivity {
             }
         });
 
-        btnAlterar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validarAlterar();
-            }
-        });
-
         listItems = getResources().getStringArray(R.array.esporte_item);
         checkedItems = new boolean[listItems.length];
 
@@ -97,7 +105,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Configuracoes_Activity.this, R.style.AlertDialogTheme);
-                mBuilder.setTitle(R.string.dialog_title);
+                mBuilder.setTitle("Altere seu(s) esporte(s)");
                 mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
@@ -121,9 +129,18 @@ public class Configuracoes_Activity extends AppCompatActivity {
                             }
                         }
                         btnEsporteupdate.setText(item);
-                        btnEsporteupdate.setTextColor(Color.parseColor("#B71C1C"));
                         if (btnEsporteupdate.getText() == "") {
-                            btnEsporteupdate.setText("Adicionar Esporte(s)");
+                            btnEsporteupdate.setText(recebeEsporte);
+                            Toast.makeText(getApplicationContext(), "Nada foi alterado", Toast.LENGTH_SHORT).show();
+                        }else{
+                            btnEsporteupdate.setTextColor(Color.parseColor("#B71C1C"));
+
+                            HashMap<String, String> params = new HashMap<>();
+                            params.put("id", String.valueOf(recebeID));
+                            params.put("esporte", item);
+
+                            PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_ESPORTE, params, CODE_POST_REQUEST);
+                            request.execute();
                         }
                     }
                 });
@@ -141,7 +158,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                         for (int i = 0; i < checkedItems.length; i++) {
                             checkedItems[i] = false;
                             mUserItems.clear();
-                            btnEsporteupdate.setText("Adicionar Esporte(s)");
+                            btnEsporteupdate.setText(recebeEsporte);
                         }
                     }
                 });
@@ -153,6 +170,52 @@ public class Configuracoes_Activity extends AppCompatActivity {
 
     }
 
+    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
+        String url;
+        HashMap<String, String> params;
+        int requestCode;
+
+        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    refreshUserList(object.getJSONArray("dats"));
+                }else{
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            RequestHandler requestHandler = new RequestHandler();
+
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+            if (requestCode == CODE_GET_REQUEST)
+                return requestHandler.sendGetRequest(url);
+
+            return null;
+        }
+    }
+
     private void ToolbarBack() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbarBack);
         setSupportActionBar(toolbar);
@@ -161,6 +224,23 @@ public class Configuracoes_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_dp);
         getSupportActionBar().setTitle("Configurações");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                String receceEmail = String.valueOf(txtEmailUpdate.getText());
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Bundle infoNome = new Bundle();
+                infoNome.putString("chave_email", receceEmail);
+                intent.putExtras(infoNome);
+                startActivity(intent);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void DialogNome(View view) {
@@ -181,6 +261,13 @@ public class Configuracoes_Activity extends AppCompatActivity {
                 } else {
                     txtNomeUpdate.setText(nome);
                     txtNomeUpdate.setTextColor(Color.parseColor("#B71C1C"));
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(recebeID));
+                    params.put("nome", nome);
+
+                    PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_NOME, params, CODE_POST_REQUEST);
+                    request.execute();
                 }
             }
         });
@@ -219,6 +306,15 @@ public class Configuracoes_Activity extends AppCompatActivity {
                 } else {
                     txtPesoUpdate.setText(peso);
                     txtPesoUpdate.setTextColor(Color.parseColor("#B71C1C"));
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(recebeID));
+                    params.put("peso", peso);
+
+                    PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_PESO, params, CODE_POST_REQUEST);
+                    request.execute();
+
+
                 }
             }
         });
@@ -257,6 +353,13 @@ public class Configuracoes_Activity extends AppCompatActivity {
                 } else {
                     txtEmailUpdate.setText(email);
                     txtEmailUpdate.setTextColor(Color.parseColor("#B71C1C"));
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("email", email);
+                    params.put("id", String.valueOf(recebeID));
+
+                    PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_EMAIL, params, CODE_POST_REQUEST);
+                    request.execute();
                 }
             }
         });
@@ -291,6 +394,13 @@ public class Configuracoes_Activity extends AppCompatActivity {
                 } else {
                     txtSenhaUpdate.setText(senha);
                     txtSenhaUpdate.setTextColor(Color.parseColor("#B71C1C"));
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(recebeID));
+                    params.put("senha", senha);
+
+                    PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_SENHA, params, CODE_POST_REQUEST);
+                    request.execute();
                 }
             }
         });
@@ -319,25 +429,41 @@ public class Configuracoes_Activity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    private void validarAlterar() {
-        if (txtNomeUpdate.getText() != "Nome") {
-            Toast.makeText(getApplicationContext(), "Alterou nome", Toast.LENGTH_SHORT).show();
-        }
-        if (txtPesoUpdate.getText() != "Peso") {
-            Toast.makeText(getApplicationContext(), "Alterou peso", Toast.LENGTH_SHORT).show();
-        }
-        if (txtEmailUpdate.getText() != "Email") {
-            Toast.makeText(getApplicationContext(), "Alterou email", Toast.LENGTH_SHORT).show();
-        }
-        if (txtSenhaUpdate.getText() != "Senha") {
-            Toast.makeText(getApplicationContext(), "Alterou senha", Toast.LENGTH_SHORT).show();
-        }
-        if (btnEsporteupdate.getText() != "Adicionar Esportes(s)") {
-            Toast.makeText(getApplicationContext(), "Alterou esporte(s)", Toast.LENGTH_SHORT).show();
-        }
-        if (txtNomeUpdate.getText() == "Nome" && txtPesoUpdate.getText() == "Peso" && txtEmailUpdate.getText() == "Email"
-                && txtSenhaUpdate.getText() == "Senha" && btnEsporteupdate.getText() == "Adicionar Esportes(s)") {
-            Toast.makeText(getApplicationContext(), "Nada foi alterado", Toast.LENGTH_SHORT).show();
+    private void alterUser() {
+        Intent intentRecebe = getIntent();
+        Bundle infoNome = intentRecebe.getExtras();
+        recebeID = infoNome.getInt("chave_id");
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", String.valueOf(recebeID));
+
+        Configuracoes_Activity.PerformNetworkRequest request = new Configuracoes_Activity.PerformNetworkRequest(Api.URL_ALTER_USER, params, CODE_POST_REQUEST);
+        request.execute();
+    }
+
+    private void readDats() {
+        Configuracoes_Activity.PerformNetworkRequest request = new Configuracoes_Activity.PerformNetworkRequest(Api.URL_ALTER_USER, null, CODE_GET_REQUEST);
+        request.execute();
+    }
+
+    private void refreshUserList(JSONArray dats) throws JSONException {
+        userList.clear();
+
+        for (int i = 0; i < dats.length(); i++) {
+            JSONObject obj = dats.getJSONObject(i);
+
+            userList.add(new User(
+                    obj.getInt("id"),
+                    obj.getString("nome"),
+                    obj.getString("peso"),
+                    obj.getString("email"),
+                    obj.getString("esporte")
+            ));
+            recebeEsporte = (obj.getString("esporte"));
+            txtNomeUpdate.setText(obj.getString("nome"));
+            txtPesoUpdate.setText(obj.getString("peso"));
+            txtEmailUpdate.setText(obj.getString("email"));
+            btnEsporteupdate.setText(obj.getString("esporte"));
         }
     }
 }

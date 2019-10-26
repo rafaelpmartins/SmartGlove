@@ -17,8 +17,17 @@ public class User {
         this.espore = espore;
     }
 
-    public User(String nome, String email, String espore) {
+    public User(int id, String nome, String email, String espore) {
+        this.id = id;
         this.nome = nome;
+        this.email = email;
+        this.espore = espore;
+    }
+
+    public User(int id, String nome, String peso, String email, String espore) {
+        this.id = id;
+        this.nome = nome;
+        this.peso = peso;
         this.email = email;
         this.espore = espore;
     }

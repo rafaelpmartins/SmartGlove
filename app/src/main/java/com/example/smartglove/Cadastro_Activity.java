@@ -34,7 +34,7 @@ public class Cadastro_Activity extends AppCompatActivity {
     private ArrayList<Integer> mUserItems = new ArrayList<>();
     private String item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText edtNome, edtPeso, edtEmail, edtSenha, edtEmailLogin, edtSenhaLogin;
-    private boolean validarEmail = false, validarCampos = false, validarSenha = false, validarPeso = false;
+    private boolean validarEmail = false, validarCampos = false, validarPeso = false;
     private String nome, peso, email, senha, esporte, EmailLogin;
 
     @Override
@@ -53,11 +53,10 @@ public class Cadastro_Activity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                campos();
-//                if (validarCampos == true) {
-//                    createUser();
-//                }
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                campos();
+                if (validarCampos == true) {
+                    createUser();
+                }
             }
         });
 
@@ -222,10 +221,6 @@ public class Cadastro_Activity extends AppCompatActivity {
         if (isValidweight(edtPeso.getText().toString().trim())) {
             validarPeso = true;
         }
-
-//        if (isValidPassword(edtSenha.getText().toString().trim())) {
-//            validarSenha = true;
-//        }
 
         if (TextUtils.isEmpty(nome) || nome.length() > 20 || nome.length() < 3) {
             edtNome.setError("Por favor insira um nome válido");

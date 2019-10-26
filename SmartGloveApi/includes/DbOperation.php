@@ -46,14 +46,15 @@ class DbOperation
 	}
 
 	function loadinguser($email){
-		$stmt = $this->con->prepare("SELECT nome, email, esporte FROM users WHERE email LIKE '$email'");
+		$stmt = $this->con->prepare("SELECT id, nome, email, esporte FROM users WHERE email LIKE '$email'");
 		$stmt->execute();
-		$stmt->bind_result($nome, $email, $esporte);
+		$stmt->bind_result($id, $nome, $email, $esporte);
 
 		$datas = array();
 
 		while($stmt->fetch()){
-			$data = array();	
+			$data = array();
+			$data['id'] = $id;			
 			$data['nome'] = $nome;
 			$data['email'] = $email;
 			$data['esporte'] = $esporte;
@@ -61,6 +62,66 @@ class DbOperation
 		}
 
 		return $datas; 
+	}
+	
+	function alteruser($id){
+		$stmt = $this->con->prepare("SELECT id, nome, peso, email, esporte FROM users WHERE id LIKE '$id'");
+		$stmt->execute();
+		$stmt->bind_result($id, $nome, $peso, $email, $esporte);
+
+		$dats = array();
+
+		while($stmt->fetch()){
+			$dat = array();
+			$dat['id'] = $id;			
+			$dat['nome'] = $nome;
+			$dat['peso'] = $peso;
+			$dat['email'] = $email;
+			$dat['esporte'] = $esporte;
+			array_push($dats, $dat);	
+		}
+
+		return $dats; 
+	}
+	
+	function updateNome($id, $nome){
+		$stmt = $this->con->prepare("UPDATE users SET nome = ? WHERE id LIKE ?");
+		$stmt->bind_param("si", $nome, $id);
+		if($stmt->execute())
+			return true; 
+		return false; 
+	}
+	
+	function updatePeso($id, $peso){
+		$stmt = $this->con->prepare("UPDATE users SET peso = ? WHERE id LIKE ?");
+		$stmt->bind_param("si", $peso, $id);
+		if($stmt->execute())
+			return true; 
+		return false; 
+	}
+	
+	function updateEmail($email, $id){
+		$stmt = $this->con->prepare("UPDATE users SET email = ? WHERE id LIKE ?");
+		$stmt->bind_param("si", $email, $id);
+		if($stmt->execute())
+			return true; 
+		return false; 
+	}
+	
+	function updateSenha($id, $senha){
+		$stmt = $this->con->prepare("UPDATE users SET senha = ? WHERE id LIKE ?");
+		$stmt->bind_param("si", $senha, $id);
+		if($stmt->execute())
+			return true; 
+		return false; 
+	}
+	
+	function updateEsporte($id, $esporte){
+		$stmt = $this->con->prepare("UPDATE users SET esporte = ? WHERE id LIKE ?");
+		$stmt->bind_param("si", $esporte, $id);
+		if($stmt->execute())
+			return true; 
+		return false; 
 	}
 
 

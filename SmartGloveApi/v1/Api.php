@@ -17,7 +17,7 @@
 		}
 		
 		//se os parâmetros estiverem faltando
-		if(!$available){
+		/*if(!$available){
 			$response = array(); 
 			$response['error'] = true; 
 			$response['message'] = 'Parameters ' . substr($missingparams, 1, strlen($missingparams)) . ' missing';
@@ -27,7 +27,7 @@
 			
 			//parando a execução adicional
 			die();
-		}
+		}*/
 	}
 	
 	//matriz para exibir a resposta
@@ -64,7 +64,6 @@
 					
 					//na mensagem temos uma mensagem de sucesso
 					$response['message'] = 'cadastro realizado com sucesso';
-
 				}else{
 					// se o registro for não, significa que há um erro
 					$response['error'] = true; 
@@ -74,7 +73,6 @@
 			break;
 
 			case 'loginuser':
-			
 				isTheseParametersAvailable(array('email', 'senha'));
 				$db = new DbOperation();
 				
@@ -87,12 +85,10 @@
 					
 					//na mensagem temos uma mensagem de sucesso
 					if($_POST['senha'] == $result){
-
 						$response['message'] = 'logado';
 					}
 					else{
 						$response['message'] = 'senha incorreta';
-
 					}
 				}
 				else{
@@ -104,11 +100,95 @@
 			break;
 
 			case 'loadinguser':
-			
 				isTheseParametersAvailable(array('email'));
 				$db = new DbOperation();
 				
+				$response['error'] = false;
 				$response['datas'] = $db->loadingUser($_POST['email']);
+			break;
+			
+			case 'alteruser':
+				isTheseParametersAvailable(array('id'));
+				$db = new DbOperation();
+				
+				$response['error'] = false;
+				$response['message'] = 'Clique e segure para alterar';
+				$response['dats'] = $db->alteruser($_POST['id']);
+			break;
+			
+			case 'updatenome':
+				isTheseParametersAvailable(array('id', 'nome'));
+				$db = new DbOperation();
+				
+				$result = $db->updateNome($_POST['id'], $_POST['nome']);
+				
+				if($result){
+					$response['error'] = false; 
+					$response['message'] = 'Nome alterado com sucesso';
+				}else{
+					$response['error'] = true; 
+					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+				}
+			break; 
+			
+			case 'updatepeso':
+				isTheseParametersAvailable(array('id', 'peso'));
+				$db = new DbOperation();
+				
+				$result = $db->updatePeso($_POST['id'], $_POST['peso']);
+				
+				if($result){
+					$response['error'] = false; 
+					$response['message'] = 'Peso alterado com sucesso';
+				}else{
+					$response['error'] = true; 
+					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+				}
+			break;
+			
+			case 'updateemail':
+				isTheseParametersAvailable(array('email', 'id'));
+				$db = new DbOperation();
+				
+				$result = $db->updateEmail($_POST['email'], $_POST['id']);
+				
+				if($result){
+					$response['error'] = false; 
+					$response['message'] = 'Email alterado com sucesso';
+				}else{
+					$response['error'] = true; 
+					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+				}
+			break;
+			
+			case 'updatesenha':
+				isTheseParametersAvailable(array('id', 'senha'));
+				$db = new DbOperation();
+				
+				$result = $db->updateSenha($_POST['id'], $_POST['senha']);
+				
+				if($result){
+					$response['error'] = false; 
+					$response['message'] = 'Senha alterada com sucesso';
+				}else{
+					$response['error'] = true; 
+					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+				}
+			break;
+			
+			case 'updateesporte':
+				isTheseParametersAvailable(array('id', 'esporte'));
+				$db = new DbOperation();
+				
+				$result = $db->updateEsporte($_POST['id'], $_POST['esporte']);
+				
+				if($result){
+					$response['error'] = false; 
+					$response['message'] = 'Esporte alterado com sucesso';
+				}else{
+					$response['error'] = true; 
+					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+				}
 			break;
 
 		}

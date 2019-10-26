@@ -31,6 +31,7 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
     private NavigationView navigationView;
     private String usuario;
     private TextView nomeMenu, emailMenu;
+    static int recebeID;
     private static boolean validarAikido = false, validarBoxe = false, validarCaratê = false, validarJeet = false,
             validarJiu = false, validarKick = false, validarMuay = false, validarWing = false;
 
@@ -45,13 +46,17 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intentRecebe = getIntent();
+        Bundle infoNome = intentRecebe.getExtras();
+        usuario = infoNome.getString("chave_email");
+
         navigationView = (NavigationView) findViewById(R.id.navView);
         View headerView = navigationView.getHeaderView(0);
         nomeMenu = (TextView) headerView.findViewById(R.id.id_nomeMenu);
         emailMenu = (TextView) headerView.findViewById(R.id.id_emailMenu);
 
-//        loading();
-//        readDatas();
+        loading();
+        readDatas();
 
         userList = new ArrayList<>();
 
@@ -76,7 +81,11 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
                 break;
             }
             case R.id.nav_item_two: {
-                startActivity(new Intent(getApplicationContext(), Configuracoes_Activity.class));
+                Intent intent = new Intent(getApplicationContext(), Configuracoes_Activity.class);
+                Bundle infoNome = new Bundle();
+                infoNome.putInt("chave_id", recebeID);
+                intent.putExtras(infoNome);
+                startActivity(intent);
                 break;
             }
             case R.id.nav_item_three: {
@@ -152,7 +161,6 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
             if (requestCode == CODE_POST_REQUEST)
                 return requestHandler.sendPostRequest(url, params);
 
-
             if (requestCode == CODE_GET_REQUEST)
                 return requestHandler.sendGetRequest(url);
 
@@ -172,36 +180,54 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
             JSONObject obj = datas.getJSONObject(i);
 
             userList.add(new User(
+                    obj.getInt("id"),
                     obj.getString("nome"),
                     obj.getString("email"),
                     obj.getString("esporte")
             ));
+            recebeID = obj.getInt("id");
             nomeMenu.setText(obj.getString("nome"));
             emailMenu.setText(obj.getString("email"));
 
             if (obj.getString("esporte").contains("Aikido")) {
                 validarAikido = true;
+            }else {
+                validarAikido = false;
             }
             if (obj.getString("esporte").contains("Boxe")) {
                 validarBoxe = true;
+            }else {
+                validarBoxe = false;
             }
             if (obj.getString("esporte").contains("Caratê")) {
                 validarCaratê = true;
+            }else{
+                validarCaratê = false;
             }
             if (obj.getString("esporte").contains("Jeet Kune Do")) {
                 validarJeet = true;
+            }else {
+                validarJeet = false;
             }
             if (obj.getString("esporte").contains("Jiu Jitsu")) {
                 validarJiu = true;
+            }else {
+                validarJiu = false;
             }
             if (obj.getString("esporte").contains("Kick Boxing")) {
                 validarKick = true;
+            }else {
+                validarKick =false;
             }
             if (obj.getString("esporte").contains("Muay Thai")) {
                 validarMuay = true;
+            }else{
+                validarMuay = false;
             }
             if (obj.getString("esporte").contains("Wing Chun")) {
                 validarWing = true;
+            }else{
+                validarWing = false;
             }
             lista();
         }
