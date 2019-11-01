@@ -72,7 +72,6 @@ public class StarTreino_Activity extends SairSystem {
 //        if (titulo.equals("Wing Chun")){
 //
 //        }
-
         btnPause.setEnabled(false);
         btnReset.setEnabled(false);
         btnStart.setImageResource(R.drawable.ic_play_circle_outline_dp);
@@ -96,7 +95,7 @@ public class StarTreino_Activity extends SairSystem {
                     btnPause.setImageResource(R.drawable.ic_pause_circle_outline_cinza_dp);
                     btnReset.setImageResource(R.drawable.ic_replay_cinza_dp);
 
-                    Toast.makeText(getApplicationContext(), "" + getDateTime() + "\n" + TempoTreino + "\n" + titulo , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "" + getDateTime() + "\n" + TempoTreino + "\n" + titulo, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -124,7 +123,6 @@ public class StarTreino_Activity extends SairSystem {
 
         progressBar();
         choiceTime();
-
         ToolbarBack();
     }
 
