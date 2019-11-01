@@ -15,6 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StarTreino_Activity extends SairSystem {
 
     private TextView txtTitulo;
@@ -27,7 +31,7 @@ public class StarTreino_Activity extends SairSystem {
     private Chronometer chrono;
     private String TempoTreino;
     private AlertDialog alertDialog;
-    private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "1 Minuto (teste)"};
+    private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "30 segundos (teste)"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class StarTreino_Activity extends SairSystem {
         chrono = (Chronometer) findViewById(R.id.id_chronometer);
 
         Intent intent = getIntent();
-        String titulo = intent.getExtras().getString("Titulo");
+        final String titulo = intent.getExtras().getString("Titulo");
         txtTitulo.setText(titulo);
 //        if (titulo.equals("Aikido")){
 //
@@ -91,7 +95,8 @@ public class StarTreino_Activity extends SairSystem {
                     btnStart.setImageResource(R.drawable.ic_play_circle_outline_cinza_dp);
                     btnPause.setImageResource(R.drawable.ic_pause_circle_outline_cinza_dp);
                     btnReset.setImageResource(R.drawable.ic_replay_cinza_dp);
-                    Toast.makeText(getApplicationContext(), "Treinou Acabou", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), "" + getDateTime() + "\n" + TempoTreino + "\n" + titulo , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -244,9 +249,9 @@ public class StarTreino_Activity extends SairSystem {
                         progressBar.setMax(6000);
                         break;
                     case 4:
-                        TempoTreino = "00:01:00";
-                        valorCirculo = 100;
-                        progressBar.setMax(100);
+                        TempoTreino = "00:00:30";
+                        valorCirculo = 50;
+                        progressBar.setMax(50);
                         break;
                 }
                 alertDialog.dismiss();
@@ -254,5 +259,11 @@ public class StarTreino_Activity extends SairSystem {
         });
         alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }
