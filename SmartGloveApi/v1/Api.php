@@ -190,6 +190,28 @@
 					$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
 				}
 			break;
+			
+			case 'createtreino':
+				isTheseParametersAvailable(array('tempo', 'data', 'titulo', 'acelerometro', 'fk_id_user'));
+				
+				$db = new DbOperation();
+				
+				$result = $db->createTreino(
+					$_POST['tempo'],
+					$_POST['data'],
+					$_POST['titulo'],
+					$_POST['acelerometro'],
+					$_POST['fk_id_user']
+				);
+				
+				if($result){
+					$response['error'] = false; 
+					$response['message'] = 'dados salvos';
+				}else{
+					$response['error'] = true;
+					$response['message'] = 'Algum erro ocorreu. seus dados se perderam';
+				}
+			break;
 
 		}
 		

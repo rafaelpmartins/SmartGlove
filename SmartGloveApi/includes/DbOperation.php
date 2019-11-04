@@ -123,6 +123,14 @@ class DbOperation
 			return true; 
 		return false; 
 	}
+	
+	function createTreino($tempo, $data, $titulo, $acelerometro, $fk_id_user){
+		$stmt = $this->con->prepare("INSERT INTO treino (tempo, data, titulo, acelerometro, fk_id_user) VALUES (?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssii", $tempo, $data, $titulo, $acelerometro, $fk_id_user);
+		if($stmt->execute())
+			return true; 
+		return false; 
+	}
 
 
 }

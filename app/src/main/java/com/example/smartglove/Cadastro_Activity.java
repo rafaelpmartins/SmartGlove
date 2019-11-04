@@ -37,6 +37,8 @@ public class Cadastro_Activity extends AppCompatActivity {
     private boolean validarEmail = false, validarCampos = false, validarPeso = false;
     private String nome, peso, email, senha, esporte, EmailLogin;
 
+    private User user = new User();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +144,8 @@ public class Cadastro_Activity extends AppCompatActivity {
         params.put("senha", senha);
         params.put("esporte", esporte);
 
+        user.setEmail(email);
+
         PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_CREATE_USER, params, CODE_POST_REQUEST);
         request.execute();
     }
@@ -170,19 +174,11 @@ public class Cadastro_Activity extends AppCompatActivity {
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     if (object.getString("message").equals("cadastro realizado com sucesso")) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        Bundle infoNome = new Bundle();
-                        infoNome.putString("chave_email", email);
-                        intent.putExtras(infoNome);
-                        startActivity(intent);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
 
                     if (object.getString("message").equals("logado")) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        Bundle infoNome = new Bundle();
-                        infoNome.putString("chave_email", EmailLogin);
-                        intent.putExtras(infoNome);
-                        startActivity(intent);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
@@ -277,6 +273,8 @@ public class Cadastro_Activity extends AppCompatActivity {
                     HashMap<String, String> params = new HashMap<>();
                     params.put("email", EmailLogin);
                     params.put("senha", SenhaLogin);
+
+                    user.setEmail(EmailLogin);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_LOGIN_USER, params, CODE_POST_REQUEST);
                     request.execute();

@@ -29,14 +29,13 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private String usuario;
     private TextView nomeMenu, emailMenu;
-    static int recebeID;
-    private static boolean validarAikido = false, validarBoxe = false, validarCaratê = false, validarJeet = false,
+    private int recebeID;
+    private boolean validarAikido = false, validarBoxe = false, validarCaratê = false, validarJeet = false,
             validarJiu = false, validarKick = false, validarMuay = false, validarWing = false;
 
-    List<Esportes> lstEsportes;
-    List<User> userList;
+    private List<Esportes> lstEsportes;
+    private List<User> userList;
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
@@ -45,10 +44,6 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Intent intentRecebe = getIntent();
-        Bundle infoNome = intentRecebe.getExtras();
-        usuario = infoNome.getString("chave_email");
 
         navigationView = (NavigationView) findViewById(R.id.navView);
         View headerView = navigationView.getHeaderView(0);
@@ -81,11 +76,7 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
                 break;
             }
             case R.id.nav_item_two: {
-                Intent intent = new Intent(getApplicationContext(), Configuracoes_Activity.class);
-                Bundle infoNome = new Bundle();
-                infoNome.putInt("chave_id", recebeID);
-                intent.putExtras(infoNome);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), Configuracoes_Activity.class));
                 break;
             }
             case R.id.nav_item_three: {
@@ -115,12 +106,8 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
     }
 
     private void loading() {
-        Intent intentRecebe = getIntent();
-        Bundle infoNome = intentRecebe.getExtras();
-        usuario = infoNome.getString("chave_email");
-
         HashMap<String, String> params = new HashMap<>();
-        params.put("email", usuario);
+        params.put("email", User.getEmail());
 
         MainActivity.PerformNetworkRequest request = new MainActivity.PerformNetworkRequest(Api.URL_LOADING_USER, params, CODE_POST_REQUEST);
         request.execute();

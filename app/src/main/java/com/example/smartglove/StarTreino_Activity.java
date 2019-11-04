@@ -2,6 +2,7 @@ package com.example.smartglove;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -15,11 +16,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class StarTreino_Activity extends SairSystem {
+
+    private static final int CODE_GET_REQUEST = 1024;
+    private static final int CODE_POST_REQUEST = 1025;
 
     private TextView txtTitulo;
     private ProgressBar progressBar;
@@ -32,6 +40,7 @@ public class StarTreino_Activity extends SairSystem {
     private String TempoTreino;
     private AlertDialog alertDialog;
     private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "30 segundos (teste)"};
+    private int acelerometro = 350;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,30 +57,7 @@ public class StarTreino_Activity extends SairSystem {
         Intent intent = getIntent();
         final String titulo = intent.getExtras().getString("Titulo");
         txtTitulo.setText(titulo);
-//        if (titulo.equals("Aikido")){
-//
-//        }
-//        if (titulo.equals("Boxe")){
-//
-//        }
-//        if (titulo.equals("Caratê")){
-//
-//        }
-//        if (titulo.equals("Jeet Kune Do")){
-//
-//        }
-//        if (titulo.equals("Jiu Jitsu")){
-//
-//        }
-//        if (titulo.equals("Kick Boxing")){
-//
-//        }
-//        if (titulo.equals("Muay Thai")){
-//
-//        }
-//        if (titulo.equals("Wing Chun")){
-//
-//        }
+
         btnPause.setEnabled(false);
         btnReset.setEnabled(false);
         btnStart.setImageResource(R.drawable.ic_play_circle_outline_dp);
@@ -95,7 +81,15 @@ public class StarTreino_Activity extends SairSystem {
                     btnPause.setImageResource(R.drawable.ic_pause_circle_outline_cinza_dp);
                     btnReset.setImageResource(R.drawable.ic_replay_cinza_dp);
 
-                    Toast.makeText(getApplicationContext(), "" + getDateTime() + "\n" + TempoTreino + "\n" + titulo, Toast.LENGTH_SHORT).show();
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("tempo", TempoTreino);
+                    params.put("data", getDateTime());
+                    params.put("titulo", titulo);
+                    params.put("acelerometro", String.valueOf(acelerometro));
+                    params.put("fk_id_user", String.valueOf(User.getId()));
+
+                    StarTreino_Activity.PerformNetworkRequest request = new StarTreino_Activity.PerformNetworkRequest(Api.URL_CREATE_TREINO, params, CODE_POST_REQUEST);
+                    request.execute();
                 }
             }
         });
@@ -263,5 +257,58 @@ public class StarTreino_Activity extends SairSystem {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
+        String url;
+        HashMap<String, String> params;
+        int requestCode;
+
+        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
+            this.url = url;
+            this.params = params;
+            this.requestCode = requestCode;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONObject object = new JSONObject(s);
+                if (!object.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    if (object.getString("message").equals("dados salvos")) {
+                        startActivity(new Intent(getApplicationContext(), Grafico_Activity.class));
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    if (object.getString("message").equals("Algum erro ocorreu. seus dados se perderam")) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getApplicationContext(), "Sem conexão Internet", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            RequestHandler requestHandler = new RequestHandler();
+
+            if (requestCode == CODE_POST_REQUEST)
+                return requestHandler.sendPostRequest(url, params);
+
+
+            if (requestCode == CODE_GET_REQUEST)
+                return requestHandler.sendGetRequest(url);
+
+            return null;
+        }
     }
 }

@@ -10,7 +10,11 @@ primary key(id)
 
 create table treino(
 id_treino int not null auto_increment,
-tempo time,
-dado_acelerometro int,
-primary key(id_treino)
+tempo varchar(10),
+data varchar(20),
+titulo varchar(20),
+acelerometro int,
+fk_id_user int,
+primary key(id_treino),
+FOREIGN key(fk_id_user)references users(id)
 );

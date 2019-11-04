@@ -38,20 +38,15 @@ public class Configuracoes_Activity extends AppCompatActivity {
     private String item, emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText edtNomeUpdate, edtPesoUpdate, edtEmailUpdate, edtSenhaUpdate;
     private boolean validarPeso = false, validarEmail = false;
-    private int recebeID;
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-    static String recebeEsporte;
-    List<User> userList;
+    private String recebeEsporte;
+    private List<User> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracoes_layout);
-
-        Intent intentRecebe = getIntent();
-        Bundle infoNome = intentRecebe.getExtras();
-        recebeID = infoNome.getInt("chave_id");
 
         readDats();
         alterUser();
@@ -136,7 +131,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                             btnEsporteupdate.setTextColor(Color.parseColor("#B71C1C"));
 
                             HashMap<String, String> params = new HashMap<>();
-                            params.put("id", String.valueOf(recebeID));
+                            params.put("id", String.valueOf(User.getId()));
                             params.put("esporte", item);
 
                             PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_ESPORTE, params, CODE_POST_REQUEST);
@@ -231,12 +226,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                String receceEmail = String.valueOf(txtEmailUpdate.getText());
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                Bundle infoNome = new Bundle();
-                infoNome.putString("chave_email", receceEmail);
-                intent.putExtras(infoNome);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 break;
         }
 
@@ -263,7 +253,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                     txtNomeUpdate.setTextColor(Color.parseColor("#B71C1C"));
 
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(recebeID));
+                    params.put("id", String.valueOf(User.getId()));
                     params.put("nome", nome);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_NOME, params, CODE_POST_REQUEST);
@@ -308,7 +298,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                     txtPesoUpdate.setTextColor(Color.parseColor("#B71C1C"));
 
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(recebeID));
+                    params.put("id", String.valueOf(User.getId()));
                     params.put("peso", peso);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_PESO, params, CODE_POST_REQUEST);
@@ -356,7 +346,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
 
                     HashMap<String, String> params = new HashMap<>();
                     params.put("email", email);
-                    params.put("id", String.valueOf(recebeID));
+                    params.put("id", String.valueOf(User.getId()));
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_EMAIL, params, CODE_POST_REQUEST);
                     request.execute();
@@ -396,7 +386,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                     txtSenhaUpdate.setTextColor(Color.parseColor("#B71C1C"));
 
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(recebeID));
+                    params.put("id", String.valueOf(User.getId()));
                     params.put("senha", senha);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_SENHA, params, CODE_POST_REQUEST);
@@ -430,12 +420,9 @@ public class Configuracoes_Activity extends AppCompatActivity {
     }
 
     private void alterUser() {
-        Intent intentRecebe = getIntent();
-        Bundle infoNome = intentRecebe.getExtras();
-        recebeID = infoNome.getInt("chave_id");
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", String.valueOf(recebeID));
+        params.put("id", String.valueOf(User.getId()));
 
         Configuracoes_Activity.PerformNetworkRequest request = new Configuracoes_Activity.PerformNetworkRequest(Api.URL_ALTER_USER, params, CODE_POST_REQUEST);
         request.execute();

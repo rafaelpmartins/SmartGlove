@@ -2,8 +2,12 @@ package com.example.smartglove;
 
 public class User {
 
-    private int id;
-    private String nome, peso, email, senha, espore;
+    private static int id;
+    private String nome;
+    private String peso;
+    private static String email;
+    private String senha;
+    private String espore;
 
     public User() {
     }
@@ -32,7 +36,7 @@ public class User {
         this.espore = espore;
     }
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
@@ -56,7 +60,7 @@ public class User {
         this.peso = peso;
     }
 
-    public String getEmail() {
+    public static String getEmail() {
         return email;
     }
 
