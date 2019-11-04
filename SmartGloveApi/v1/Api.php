@@ -192,7 +192,7 @@
 			break;
 			
 			case 'createtreino':
-				isTheseParametersAvailable(array('tempo', 'data', 'titulo', 'acelerometro', 'fk_id_user'));
+				isTheseParametersAvailable(array('tempo', 'data', 'titulo', 'forca', 'velocity', 'fk_id_user'));
 				
 				$db = new DbOperation();
 				
@@ -200,7 +200,8 @@
 					$_POST['tempo'],
 					$_POST['data'],
 					$_POST['titulo'],
-					$_POST['acelerometro'],
+					$_POST['forca'],
+					$_POST['velocity'],
 					$_POST['fk_id_user']
 				);
 				

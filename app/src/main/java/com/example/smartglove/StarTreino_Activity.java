@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -40,7 +42,9 @@ public class StarTreino_Activity extends SairSystem {
     private String TempoTreino;
     private AlertDialog alertDialog;
     private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "30 segundos (teste)"};
-    private int acelerometro = 350;
+    private double[] force = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1};//Força valores
+    private double[] velocity = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60};//Velocidade valores
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +85,15 @@ public class StarTreino_Activity extends SairSystem {
                     btnPause.setImageResource(R.drawable.ic_pause_circle_outline_cinza_dp);
                     btnReset.setImageResource(R.drawable.ic_replay_cinza_dp);
 
+                    Log.d("mytag", Arrays.toString(force));
+                    Log.d("mytag2", Arrays.toString(velocity));
+
                     HashMap<String, String> params = new HashMap<>();
                     params.put("tempo", TempoTreino);
                     params.put("data", getDateTime());
                     params.put("titulo", titulo);
-                    params.put("acelerometro", String.valueOf(acelerometro));
+                    params.put("forca", Arrays.toString(force));
+                    params.put("velocity", Arrays.toString(velocity));
                     params.put("fk_id_user", String.valueOf(User.getId()));
 
                     StarTreino_Activity.PerformNetworkRequest request = new StarTreino_Activity.PerformNetworkRequest(Api.URL_CREATE_TREINO, params, CODE_POST_REQUEST);
@@ -303,7 +311,6 @@ public class StarTreino_Activity extends SairSystem {
 
             if (requestCode == CODE_POST_REQUEST)
                 return requestHandler.sendPostRequest(url, params);
-
 
             if (requestCode == CODE_GET_REQUEST)
                 return requestHandler.sendGetRequest(url);

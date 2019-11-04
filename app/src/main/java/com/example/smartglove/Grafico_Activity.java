@@ -20,13 +20,13 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class Grafico_Activity extends SairSystem {
 
     //eixo X
-    private String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
+    private String[] axisData = {"1°", "2°", "3°", "4°", "5°", "6°", "7°", "8°", "9°", "10°"};
 
     //Força valores
-    private double[] yAxisData = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1, 18.8, 90.9};
+    private double[] yAxisData = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1};
 
     //Velocidade valores
-    private double[] zAxisData = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60, 90, 70};
+    private double[] zAxisData = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
