@@ -26,7 +26,6 @@ public class Cadastro_Activity extends AppCompatActivity {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-
     private TextView txt_irLogin;
     private Button btnEsporte, btnCadastrar;
     private String[] listItems;
@@ -36,7 +35,6 @@ public class Cadastro_Activity extends AppCompatActivity {
     private EditText edtNome, edtPeso, edtEmail, edtSenha, edtEmailLogin, edtSenhaLogin;
     private boolean validarEmail = false, validarCampos = false, validarPeso = false;
     private String nome, peso, email, senha, esporte, EmailLogin;
-
     private User user = new User();
 
     @Override
@@ -174,11 +172,15 @@ public class Cadastro_Activity extends AppCompatActivity {
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     if (object.getString("message").equals("cadastro realizado com sucesso")) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(Cadastro_Activity.this, MainActivity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
                     }
 
                     if (object.getString("message").equals("logado")) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(Cadastro_Activity.this, MainActivity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
@@ -195,7 +197,6 @@ public class Cadastro_Activity extends AppCompatActivity {
 
             if (requestCode == CODE_POST_REQUEST)
                 return requestHandler.sendPostRequest(url, params);
-
 
             if (requestCode == CODE_GET_REQUEST)
                 return requestHandler.sendGetRequest(url);

@@ -1,11 +1,15 @@
 package com.example.smartglove;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,12 +48,17 @@ public class StarTreino_Activity extends SairSystem {
     private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "30 segundos (teste)"};
     private double[] force = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1};//Força valores
     private double[] velocity = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60};//Velocidade valores
-
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.star_treino_layout);
+
+        final Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
 
         txtTitulo = (TextView) findViewById(R.id.txtIdTitulo);
         progressBar = (ProgressBar) findViewById(R.id.id_progressBar);
@@ -58,8 +67,8 @@ public class StarTreino_Activity extends SairSystem {
         btnReset = (ImageButton) findViewById(R.id.id_reset);
         chrono = (Chronometer) findViewById(R.id.id_chronometer);
 
-        Intent intent = getIntent();
-        final String titulo = intent.getExtras().getString("Titulo");
+        Intent intent2 = getIntent();
+        final String titulo = intent2.getExtras().getString("Titulo");
         txtTitulo.setText(titulo);
 
         btnPause.setEnabled(false);
@@ -85,19 +94,23 @@ public class StarTreino_Activity extends SairSystem {
                     btnPause.setImageResource(R.drawable.ic_pause_circle_outline_cinza_dp);
                     btnReset.setImageResource(R.drawable.ic_replay_cinza_dp);
 
-                    Log.d("mytag", Arrays.toString(force));
-                    Log.d("mytag2", Arrays.toString(velocity));
-
                     HashMap<String, String> params = new HashMap<>();
                     params.put("tempo", TempoTreino);
                     params.put("data", getDateTime());
                     params.put("titulo", titulo);
                     params.put("forca", Arrays.toString(force));
                     params.put("velocity", Arrays.toString(velocity));
-                    params.put("fk_id_user", String.valueOf(User.getId()));
+                    params.put("fk_id_user", String.valueOf(user.getId()));
 
                     StarTreino_Activity.PerformNetworkRequest request = new StarTreino_Activity.PerformNetworkRequest(Api.URL_CREATE_TREINO, params, CODE_POST_REQUEST);
                     request.execute();
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createOneShot(1500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        //deprecated in API 26
+                        v.vibrate(1500);
+                    }
                 }
             }
         });
@@ -143,7 +156,9 @@ public class StarTreino_Activity extends SairSystem {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Intent intent = new Intent(StarTreino_Activity.this, MainActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
                 break;
         }
 
@@ -291,12 +306,16 @@ public class StarTreino_Activity extends SairSystem {
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     if (object.getString("message").equals("dados salvos")) {
-                        startActivity(new Intent(getApplicationContext(), Grafico_Activity.class));
+                        Intent intent = new Intent(StarTreino_Activity.this, Grafico_Activity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     if (object.getString("message").equals("Algum erro ocorreu. seus dados se perderam")) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(StarTreino_Activity.this, MainActivity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
                     }
                 }
             } catch (JSONException e) {

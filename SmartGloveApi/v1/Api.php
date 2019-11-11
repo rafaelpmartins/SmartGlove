@@ -213,6 +213,31 @@
 					$response['message'] = 'Algum erro ocorreu. seus dados se perderam';
 				}
 			break;
+			
+			case 'loadingtreiner':
+				isTheseParametersAvailable(array('fk_id_user'));
+				$db = new DbOperation();
+				
+				$response['error'] = false;
+				$response['treinos'] = $db->loadingTreiner($_POST['fk_id_user']);
+			break;
+			
+			case 'deletetreiner':
+			// para a operação delete estamos obtendo um parâmetro GET da url com o id do registro a ser deletado
+				if(isset($_GET['id_treino'])){
+					$db = new DbOperation();
+					if($db->deleteTreiner($_GET['id_treino'])){
+						$response['error'] = false; 
+						$response['message'] = 'Treino apagado com sucesso';
+					}else{
+						$response['error'] = true; 
+						$response['message'] = 'Algum erro ocorreu. Por favor tente novamente';
+					}
+				}else{
+					$response['error'] = true; 
+					$response['message'] = 'Nada a excluir. Por favor forneça o id';
+				}
+			break; 
 
 		}
 		

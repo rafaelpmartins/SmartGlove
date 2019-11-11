@@ -42,11 +42,15 @@ public class Configuracoes_Activity extends AppCompatActivity {
     private static final int CODE_POST_REQUEST = 1025;
     private String recebeEsporte;
     private List<User> userList;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracoes_layout);
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
 
         readDats();
         alterUser();
@@ -127,11 +131,11 @@ public class Configuracoes_Activity extends AppCompatActivity {
                         if (btnEsporteupdate.getText() == "") {
                             btnEsporteupdate.setText(recebeEsporte);
                             Toast.makeText(getApplicationContext(), "Nada foi alterado", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             btnEsporteupdate.setTextColor(Color.parseColor("#B71C1C"));
 
                             HashMap<String, String> params = new HashMap<>();
-                            params.put("id", String.valueOf(User.getId()));
+                            params.put("id", String.valueOf(user.getId()));
                             params.put("esporte", item);
 
                             PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_ESPORTE, params, CODE_POST_REQUEST);
@@ -189,7 +193,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                     refreshUserList(object.getJSONArray("dats"));
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -226,7 +230,9 @@ public class Configuracoes_Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Intent intent = new Intent(Configuracoes_Activity.this, MainActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
                 break;
         }
 
@@ -253,7 +259,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                     txtNomeUpdate.setTextColor(Color.parseColor("#B71C1C"));
 
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(User.getId()));
+                    params.put("id", String.valueOf(user.getId()));
                     params.put("nome", nome);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_NOME, params, CODE_POST_REQUEST);
@@ -298,7 +304,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                     txtPesoUpdate.setTextColor(Color.parseColor("#B71C1C"));
 
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(User.getId()));
+                    params.put("id", String.valueOf(user.getId()));
                     params.put("peso", peso);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_PESO, params, CODE_POST_REQUEST);
@@ -346,7 +352,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
 
                     HashMap<String, String> params = new HashMap<>();
                     params.put("email", email);
-                    params.put("id", String.valueOf(User.getId()));
+                    params.put("id", String.valueOf(user.getId()));
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_EMAIL, params, CODE_POST_REQUEST);
                     request.execute();
@@ -386,7 +392,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
                     txtSenhaUpdate.setTextColor(Color.parseColor("#B71C1C"));
 
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(User.getId()));
+                    params.put("id", String.valueOf(user.getId()));
                     params.put("senha", senha);
 
                     PerformNetworkRequest request = new PerformNetworkRequest(Api.URL_UPDATE_SENHA, params, CODE_POST_REQUEST);
@@ -422,7 +428,7 @@ public class Configuracoes_Activity extends AppCompatActivity {
     private void alterUser() {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("id", String.valueOf(User.getId()));
+        params.put("id", String.valueOf(user.getId()));
 
         Configuracoes_Activity.PerformNetworkRequest request = new Configuracoes_Activity.PerformNetworkRequest(Api.URL_ALTER_USER, params, CODE_POST_REQUEST);
         request.execute();
@@ -439,13 +445,12 @@ public class Configuracoes_Activity extends AppCompatActivity {
         for (int i = 0; i < dats.length(); i++) {
             JSONObject obj = dats.getJSONObject(i);
 
-            userList.add(new User(
-                    obj.getInt("id"),
+            user = new User(obj.getInt("id"),
                     obj.getString("nome"),
                     obj.getString("peso"),
                     obj.getString("email"),
-                    obj.getString("esporte")
-            ));
+                    obj.getString("esporte"));
+            userList.add(user);
             recebeEsporte = (obj.getString("esporte"));
             txtNomeUpdate.setText(obj.getString("nome"));
             txtPesoUpdate.setText(obj.getString("peso"));

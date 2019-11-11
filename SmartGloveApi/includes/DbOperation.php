@@ -131,6 +131,31 @@ class DbOperation
 			return true; 
 		return false; 
 	}
+	
+	function loadingTreiner($fk_id_user){
+		$stmt = $this->con->prepare("SELECT id_treino, tempo, data, titulo FROM treino WHERE fk_id_user LIKE '$fk_id_user'");
+		$stmt->execute();
+		$stmt->bind_result($id_treino, $tempo, $data, $titulo);
 
+		$treinos = array();
 
+		while($stmt->fetch()){
+			$treino = array();
+			$treino['id_treino'] = $id_treino;			
+			$treino['tempo'] = $tempo;
+			$treino['data'] = $data;
+			$treino['titulo'] = $titulo;
+			array_push($treinos, $treino);	
+		}
+
+		return $treinos; 
+	}
+
+    function deleteTreiner($id_treino){
+		$stmt = $this->con->prepare("DELETE FROM treino WHERE id_treino = ? ");
+		$stmt->bind_param("i", $id_treino);
+		if($stmt->execute())
+			return true; 
+		return false; 
+	}
 }

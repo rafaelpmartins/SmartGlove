@@ -1,11 +1,13 @@
 package com.example.smartglove;
 
-public class User {
+import java.io.Serializable;
 
-    private static int id;
+public class User implements Serializable {
+
+    private int id;
     private String nome;
     private String peso;
-    private static String email;
+    private String email;
     private String senha;
     private String espore;
 
@@ -36,7 +38,7 @@ public class User {
         this.espore = espore;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
@@ -60,7 +62,7 @@ public class User {
         this.peso = peso;
     }
 
-    public static String getEmail() {
+    public String getEmail() {
         return email;
     }
 
