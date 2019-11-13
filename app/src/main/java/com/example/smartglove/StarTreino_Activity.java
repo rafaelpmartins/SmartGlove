@@ -46,8 +46,8 @@ public class StarTreino_Activity extends SairSystem {
     private String TempoTreino;
     private AlertDialog alertDialog;
     private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "30 segundos (teste)"};
-    private double[] force = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1};//Força valores
-    private double[] velocity = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60};//Velocidade valores
+    private double[] force = {900.06, 800.89, 700.45, 600, 500, 400, 300, 200, 100};//Força valores
+    private double[] velocity = {15.9, 14, 13, 11, 10.35, 9, 8, 7, 6.35};//Velocidade valores
     private User user;
 
     @Override

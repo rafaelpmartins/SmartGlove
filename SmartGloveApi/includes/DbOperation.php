@@ -133,9 +133,9 @@ class DbOperation
 	}
 	
 	function loadingTreiner($fk_id_user){
-		$stmt = $this->con->prepare("SELECT id_treino, tempo, data, titulo FROM treino WHERE fk_id_user LIKE '$fk_id_user'");
+		$stmt = $this->con->prepare("SELECT id_treino, tempo, data, titulo, forca, velocity FROM treino WHERE fk_id_user LIKE '$fk_id_user'");
 		$stmt->execute();
-		$stmt->bind_result($id_treino, $tempo, $data, $titulo);
+		$stmt->bind_result($id_treino, $tempo, $data, $titulo, $forca, $velocity);
 
 		$treinos = array();
 
@@ -145,6 +145,8 @@ class DbOperation
 			$treino['tempo'] = $tempo;
 			$treino['data'] = $data;
 			$treino['titulo'] = $titulo;
+			$treino['forca'] = $forca;
+			$treino['velocity'] = $velocity;
 			array_push($treinos, $treino);	
 		}
 

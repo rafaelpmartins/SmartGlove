@@ -40,9 +40,8 @@ public class Grafico_Activity extends SairSystem {
     private static final int CODE_POST_REQUEST = 1025;
     private ListView listView;
     private List<Treiner> treinerList;
-    private double[] forceData = {50.7, 20.5, 15.9, 30.1, 20.2, 60.6, 15.5, 40.4, 45.3, 10.1};//Força valores
-    private double[] VelocityData = {10, 30, 20, 40, 60, 40, 80, 25, 35, 60};//Velocidade valores
-    private Treiner treiner = new Treiner();
+    private Treiner treiner2 = new Treiner();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,114 +56,14 @@ public class Grafico_Activity extends SairSystem {
         readTreiner();
         loadingTreiner();
 
-        ForceGraphic();
-        VelocityGraphic();
+        graficoVazio();
     }
 
-    private void ForceGraphic() {
-        LineChart chart = (LineChart) findViewById(R.id.id_ForceChart);
-
-        List<Entry> entries = new ArrayList<Entry>();
-        entries.add(new Entry((float) 1, 800.8f));
-        entries.add(new Entry((float) 2, 100.3f));
-        entries.add(new Entry((float) 3, 700.6f));
-        entries.add(new Entry((float) 4, 600.8f));
-        entries.add(new Entry((float) 5, 900.1f));
-        entries.add(new Entry((float) 6, 200.1f));
-        entries.add(new Entry((float) 7, 300.1f));
-        entries.add(new Entry((float) 8, 1000.1f));
-        entries.add(new Entry((float) 9, 700.1f));
-        entries.add(new Entry((float) 10, 400.1f));
-
-        chart.getAxisRight().setEnabled(false);
-        chart.getXAxis().setEnabled(false);
-        chart.setNoDataText("Você precisa fornecer dados para o gráfico.");
-
-        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(getApplicationContext(), e.getY() +" "+ "Kg", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-        LineDataSet dataSet = new LineDataSet(entries, "Força em Kg.");
-        //dando preenchimento debaixo da linha
-        dataSet.setDrawFilled(true);
-        dataSet.setFillColor(Color.RED);
-        dataSet.setDrawValues(false);
-
-        //editando a linha
-        dataSet.setCircleRadius(3f);
-        dataSet.setDrawCircleHole(false);
-        dataSet.setColor(Color.RED);
-        dataSet.setCircleColor(Color.RED);
-
-        LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
-        // Desativa o ZOOM do Touch
-        chart.setDoubleTapToZoomEnabled(false);
-
-        // Efeito de animação
-        chart.animateXY(3000, 3000);
-        chart.invalidate();
-    }
-
-    private void VelocityGraphic() {
-        LineChart chart = (LineChart) findViewById(R.id.id_VelocityChart);
-
-        List<Entry> entries = new ArrayList<Entry>();
-        entries.add(new Entry((float) 1, 30.1f));
-        entries.add(new Entry((float) 2, 100.1f));
-        entries.add(new Entry((float) 3, 70.1f));
-        entries.add(new Entry((float) 4, 40.1f));
-        entries.add(new Entry((float) 5, 80.8f));
-        entries.add(new Entry((float) 6, 10.3f));
-        entries.add(new Entry((float) 7, 70.6f));
-        entries.add(new Entry((float) 8, 60.8f));
-        entries.add(new Entry((float) 9, 90.1f));
-        entries.add(new Entry((float) 10, 20.1f));
-
-        chart.getAxisRight().setEnabled(false);
-        chart.getXAxis().setEnabled(false);
-        chart.setNoDataText("Você precisa fornecer dados para o gráfico.");
-
-        chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Toast.makeText(getApplicationContext(), e.getY() +" "+ "M/s", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-        LineDataSet dataSet = new LineDataSet(entries, "Velocidade em M/s");
-        //dando preenchimento debaixo da linha
-        dataSet.setDrawFilled(true);
-        dataSet.setFillColor(Color.BLACK);
-        dataSet.setDrawValues(false);
-
-        //editando a linha
-        dataSet.setCircleRadius(3f);
-        dataSet.setDrawCircleHole(false);
-        dataSet.setColor(Color.BLACK);
-        dataSet.setCircleColor(Color.BLACK);
-
-        LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
-        // Desativa o ZOOM do Touch
-        chart.setDoubleTapToZoomEnabled(false);
-
-        // Efeito de animação
-        chart.animateXY(3000, 3000);
-        chart.invalidate();
+    private void graficoVazio() {
+        LineChart chart1 = (LineChart) findViewById(R.id.id_ForceChart);
+        chart1.setNoDataText("Você precisa treinar para ter dados de Força");
+        LineChart chart2 = (LineChart) findViewById(R.id.id_VelocityChart);
+        chart2.setNoDataText("Você precisa treinar para obter dados de velocidade");
     }
 
     private void ToolbarBack() {
@@ -210,12 +109,14 @@ public class Grafico_Activity extends SairSystem {
         for (int i = 0; i < treinos.length(); i++) {
             JSONObject obj = treinos.getJSONObject(i);
 
-            treiner = new Treiner(
+            treiner2 = new Treiner(
                     obj.getInt("id_treino"),
                     obj.getString("tempo"),
                     obj.getString("data"),
-                    obj.getString("titulo"));
-            treinerList.add(treiner);
+                    obj.getString("titulo"),
+                    obj.getString("forca"),
+                    obj.getString("velocity"));
+            treinerList.add(treiner2);
         }
 
         TreinerAdapter adapter = new TreinerAdapter(treinerList);
@@ -302,6 +203,87 @@ public class Grafico_Activity extends SairSystem {
                         case MotionEvent.ACTION_DOWN: {
                             this.firstTouchTS = System.currentTimeMillis();
                             listViewItem.setBackgroundResource(R.drawable.botao_nasc);
+
+                            //inserindo linha de força ao grafico
+                            String stringForca = treiner.getForca().replace("[", "").replace("]", "");
+                            String[] arrayStringForca = stringForca.split(",");
+                            LineChart chart = (LineChart) findViewById(R.id.id_ForceChart);
+                            List<Entry> entries1 = new ArrayList<Entry>();
+                            for (int i = 0; i < arrayStringForca.length; i++) {
+                                float posicaoForca = Float.parseFloat(arrayStringForca[i]);
+                                entries1.add(new Entry(i, posicaoForca));
+                            }
+                            chart.getAxisRight().setEnabled(false);
+                            chart.getXAxis().setEnabled(false);
+                            chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                                @Override
+                                public void onValueSelected(Entry e, Highlight h) {
+                                    Toast.makeText(getApplicationContext(), e.getY() + " " + "Kg", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onNothingSelected() {
+
+                                }
+                            });
+                            LineDataSet dataSet = new LineDataSet(entries1, "Força em Kg.");
+                            //dando preenchimento debaixo da linha
+                            dataSet.setDrawFilled(true);
+                            dataSet.setFillColor(Color.RED);
+                            dataSet.setDrawValues(false);
+                            //editando a linha
+                            dataSet.setCircleRadius(3f);
+                            dataSet.setDrawCircleHole(false);
+                            dataSet.setColor(Color.RED);
+                            dataSet.setCircleColor(Color.RED);
+                            LineData lineData = new LineData(dataSet);
+                            chart.setData(lineData);
+                            // Desativa o ZOOM do Touch
+                            chart.setDoubleTapToZoomEnabled(false);
+                            // Efeito de animação
+                            chart.animateXY(3000, 3000);
+                            chart.invalidate();
+
+                            //inserindo linha de velocidade ao grafico
+                            String stringVelocity = treiner.getVelocidade().replace("[", "").replace("]", "");
+                            String[] arrayStringVelocity = stringVelocity.split(",");
+                            LineChart chart2 = (LineChart) findViewById(R.id.id_VelocityChart);
+                            List<Entry> entries2 = new ArrayList<Entry>();
+                            for (int i = 0; i < arrayStringVelocity.length; i++) {
+                                float posicaoForca = Float.parseFloat(arrayStringVelocity[i]);
+                                entries2.add(new Entry(i, posicaoForca));
+                            }
+                            chart2.getAxisRight().setEnabled(false);
+                            chart2.getXAxis().setEnabled(false);
+                            chart2.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                                @Override
+                                public void onValueSelected(Entry e, Highlight h) {
+                                    Toast.makeText(getApplicationContext(), e.getY() + " " + "M/s", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onNothingSelected() {
+
+                                }
+                            });
+                            LineDataSet dataSet2 = new LineDataSet(entries2, "Velocidade em M/s");
+                            //dando preenchimento debaixo da linha
+                            dataSet2.setDrawFilled(true);
+                            dataSet2.setFillColor(Color.BLACK);
+                            dataSet2.setDrawValues(false);
+                            //editando a linha
+                            dataSet2.setCircleRadius(3f);
+                            dataSet2.setDrawCircleHole(false);
+                            dataSet2.setColor(Color.BLACK);
+                            dataSet2.setCircleColor(Color.BLACK);
+                            LineData lineData2 = new LineData(dataSet2);
+                            chart2.setData(lineData2);
+                            // Desativa o ZOOM do Touch
+                            chart2.setDoubleTapToZoomEnabled(false);
+                            // Efeito de animação
+                            chart2.animateXY(3000, 3000);
+                            chart2.invalidate();
+
                             break;
                         }
                         case MotionEvent.ACTION_UP: {

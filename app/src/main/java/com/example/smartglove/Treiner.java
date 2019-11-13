@@ -11,11 +11,13 @@ public class Treiner implements Serializable {
     public Treiner() {
     }
 
-    public Treiner(int idTreino, String tempo, String data, String titulo) {
+    public Treiner(int idTreino, String tempo, String data, String titulo, String forca, String velocidade) {
         this.idTreino = idTreino;
         this.tempo = tempo;
         this.data = data;
         this.titulo = titulo;
+        this.forca = forca;
+        this.velocidade = velocidade;
     }
 
     public int getIdTreino() {
