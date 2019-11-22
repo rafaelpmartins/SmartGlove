@@ -1,0 +1,4 @@
+#Thu Nov 21 23:19:30 BRST 2019
+base.0=C\:\\Users\\manager\\Desktop\\SmartGlove\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

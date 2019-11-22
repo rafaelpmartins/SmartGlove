@@ -3,6 +3,10 @@ package com.example.smartglove;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +16,6 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
@@ -25,16 +28,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
-public class StarTreino_Activity extends SairSystem {
+import static java.lang.Math.abs;
+
+public class StarTreino_Activity extends SairSystem implements SensorEventListener {
 
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-
     private TextView txtTitulo;
     private ProgressBar progressBar;
     private int pStatus = 0, valorCirculo;
@@ -45,10 +53,21 @@ public class StarTreino_Activity extends SairSystem {
     private Chronometer chrono;
     private String TempoTreino;
     private AlertDialog alertDialog;
-    private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "30 segundos (teste)"};
-    private double[] force = {900.06, 800.89, 700.45, 600, 500, 400, 300, 200, 100};//Força valores
+    private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "15 segundos (teste)"};
     private double[] velocity = {15.9, 14, 13, 11, 10.35, 9, 8, 7, 6.35};//Velocidade valores
     private User user;
+
+
+    private float dadoY;
+    private static final int X = 0;
+    private static final int Y = 1;
+    private static final int Z = 2;
+    private float[] mGravity = {0.0f, 0.0f, 0.0f};
+    private float[] mLinearAcceleration = {0.0f, 0.0f, 0.0f};
+    private SensorManager mSensorManager;
+    private Sensor mAcelerometro;
+    private List<Acelerometro> acelerometrosList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +117,7 @@ public class StarTreino_Activity extends SairSystem {
                     params.put("tempo", TempoTreino);
                     params.put("data", getDateTime());
                     params.put("titulo", titulo);
-                    params.put("forca", Arrays.toString(force));
+                    params.put("forca", String.valueOf(calculaSpeed()));
                     params.put("velocity", Arrays.toString(velocity));
                     params.put("fk_id_user", String.valueOf(user.getId()));
 
@@ -139,6 +158,9 @@ public class StarTreino_Activity extends SairSystem {
         progressBar();
         choiceTime();
         ToolbarBack();
+
+
+        acelerometrosList = new ArrayList<>();
     }
 
     private void ToolbarBack() {
@@ -166,6 +188,11 @@ public class StarTreino_Activity extends SairSystem {
     }
 
     private void start() {
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mAcelerometro = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        mSensorManager.registerListener(this, mAcelerometro, SensorManager.SENSOR_DELAY_UI);
+
         btnStart.setEnabled(false);
         btnStart.setImageResource(R.drawable.ic_play_circle_outline_cinza_dp);
         btnPause.setEnabled(true);
@@ -185,6 +212,8 @@ public class StarTreino_Activity extends SairSystem {
     }
 
     private void pause() {
+        mSensorManager.unregisterListener(this);
+
         timeWhenPaused = chrono.getBase() - SystemClock.elapsedRealtime();
         chrono.stop();
         isChronometerRunning = false;
@@ -196,6 +225,8 @@ public class StarTreino_Activity extends SairSystem {
     }
 
     private void reset() {
+        acelerometrosList.clear();
+
         chrono.setBase(SystemClock.elapsedRealtime());
         chrono.setText("00:00:00");
         chrono.stop();
@@ -264,9 +295,9 @@ public class StarTreino_Activity extends SairSystem {
                         progressBar.setMax(6000);
                         break;
                     case 4:
-                        TempoTreino = "00:00:30";
-                        valorCirculo = 50;
-                        progressBar.setMax(50);
+                        TempoTreino = "00:00:15";
+                        valorCirculo = 25;
+                        progressBar.setMax(25);
                         break;
                 }
                 alertDialog.dismiss();
@@ -280,6 +311,41 @@ public class StarTreino_Activity extends SairSystem {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+        NumberFormat formatarFloat = new DecimalFormat("0.0");
+        final float alpha = 0.8f;
+
+        // Gravity components of x, y, and z acceleration
+        mGravity[X] = alpha * mGravity[X] + (1 - alpha) * event.values[X];
+        mGravity[Y] = alpha * mGravity[Y] + (1 - alpha) * event.values[Y];
+        mGravity[Z] = alpha * mGravity[Z] + (1 - alpha) * event.values[Z];
+
+        // Linear acceleration along the x, y, and z axes (gravity effects removed)
+        mLinearAcceleration[X] = event.values[X] - mGravity[X];
+        mLinearAcceleration[Y] = event.values[Y] - mGravity[Y];
+        mLinearAcceleration[Z] = event.values[Z] - mGravity[Z];
+
+        // variáveis para recebr os valores do sensores
+        dadoY = abs(mLinearAcceleration[Y]);
+        dadoY = dadoY / 4;
+
+        Acelerometro acelerometro = new Acelerometro();
+
+        if(dadoY > 7){
+            String eixoYformtat = formatarFloat.format(dadoY);
+            acelerometro.setEixoY(Float.parseFloat(eixoYformtat));
+            acelerometrosList.add(acelerometro);
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
@@ -336,5 +402,15 @@ public class StarTreino_Activity extends SairSystem {
 
             return null;
         }
+    }
+
+    private List calculaSpeed(){
+        List velocidade = new ArrayList();
+
+        for(int i = 0; i < acelerometrosList.size(); i++){
+            velocidade.set(i, acelerometrosList.get(i));
+        }
+
+        return velocidade;
     }
 }
