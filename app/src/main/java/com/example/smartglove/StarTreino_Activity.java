@@ -16,6 +16,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
@@ -54,9 +55,9 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
     private String TempoTreino;
     private AlertDialog alertDialog;
     private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "15 segundos (teste)"};
-    private double[] velocity = {15.9, 14, 13, 11, 10.35, 9, 8, 7, 6.35};//Velocidade valores
     private User user;
 
+    private double[] force = {900.06, 800.89, 700.45, 600, 500, 400, 300, 200, 100};//Força valores
 
     private float dadoY;
     private static final int X = 0;
@@ -117,8 +118,8 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
                     params.put("tempo", TempoTreino);
                     params.put("data", getDateTime());
                     params.put("titulo", titulo);
-                    params.put("forca", String.valueOf(calculaSpeed()));
-                    params.put("velocity", Arrays.toString(velocity));
+                    params.put("forca", Arrays.toString(force));
+                    params.put("velocity", String.valueOf(acelerometrosList));
                     params.put("fk_id_user", String.valueOf(user.getId()));
 
                     StarTreino_Activity.PerformNetworkRequest request = new StarTreino_Activity.PerformNetworkRequest(Api.URL_CREATE_TREINO, params, CODE_POST_REQUEST);
@@ -158,7 +159,6 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
         progressBar();
         choiceTime();
         ToolbarBack();
-
 
         acelerometrosList = new ArrayList<>();
     }
@@ -316,7 +316,6 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        NumberFormat formatarFloat = new DecimalFormat("0.0");
         final float alpha = 0.8f;
 
         // Gravity components of x, y, and z acceleration
@@ -331,13 +330,12 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
 
         // variáveis para recebr os valores do sensores
         dadoY = abs(mLinearAcceleration[Y]);
-        dadoY = dadoY / 4;
+        dadoY = dadoY / 2;
 
         Acelerometro acelerometro = new Acelerometro();
 
         if(dadoY > 7){
-            String eixoYformtat = formatarFloat.format(dadoY);
-            acelerometro.setEixoY(Float.parseFloat(eixoYformtat));
+            acelerometro.setEixoY(dadoY);
             acelerometrosList.add(acelerometro);
         }
 
@@ -404,13 +402,10 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
         }
     }
 
-    private List calculaSpeed(){
-        List velocidade = new ArrayList();
+//    public float calculaForca(){
+//        float peso_braco = 430f / Float.parseFloat(user.getPeso());
+//
+//        return peso_braco;
+//    }
 
-        for(int i = 0; i < acelerometrosList.size(); i++){
-            velocidade.set(i, acelerometrosList.get(i));
-        }
-
-        return velocidade;
-    }
 }
