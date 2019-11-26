@@ -57,8 +57,6 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
     private CharSequence[] values = {"15 Minutos", "30 Minutos", "45 Minutos", "1 Hora", "15 segundos (teste)"};
     private User user;
 
-    private double[] force = {900.06, 800.89, 700.45, 600, 500, 400, 300, 200, 100};//Força valores
-
     private float dadoY;
     private static final int X = 0;
     private static final int Y = 1;

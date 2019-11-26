@@ -44,7 +44,7 @@
             android:id="@+id/id_txtNomeUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="otavio"
+            android:text="******"
             android:textColor="@color/PretoCor"
             android:textSize="15dp" />
     </LinearLayout>
@@ -71,7 +71,7 @@
             android:id="@+id/id_txtPesoUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="80"
+            android:text="**"
             android:textColor="@color/PretoCor"
             android:textSize="15dp" />
     </LinearLayout>
@@ -98,7 +98,7 @@
             android:id="@+id/id_txtEmailUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="otavio@etec.com"
+            android:text="******@****.com"
             android:textColor="@color/PretoCor"
             android:textSize="15dp" />
     </LinearLayout>
@@ -137,7 +137,7 @@
         android:layout_gravity="start"
         android:background="@drawable/alterar_borda"
         android:padding="5dp"
-        android:text="Aikido, Caratê"
+        android:text="******, ******"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textSize="15dp"

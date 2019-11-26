@@ -19,73 +19,79 @@
 13    <uses-permission android:name="android.permission.VIBRATE" />
 13-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:7:5-66
 13-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:7:22-63
-14
-15    <application
-15-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:9:5-37:19
-16        android:allowBackup="true"
-16-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:10:9-35
-17        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
-17-->[com.android.support:support-compat:28.0.0] C:\Users\manager\.gradle\caches\transforms-2\files-2.1\ccf94a4f227dfa4f17156620e28a8b98\support-compat-28.0.0\AndroidManifest.xml:22:18-91
-18        android:debuggable="true"
-19        android:icon="@mipmap/ic_launcher"
-19-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:11:9-43
-20        android:label="@string/app_name"
-20-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:12:9-41
-21        android:roundIcon="@mipmap/ic_launcher_round"
-21-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:13:9-54
-22        android:supportsRtl="true"
-22-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:14:9-35
-23        android:testOnly="true"
-24        android:theme="@style/TemaSemBarra"
-24-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:15:9-44
-25        android:usesCleartextTraffic="true" >
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:8:5-81
+14-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:8:22-78
+15
+16    <application
+16-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:10:5-39:19
+17        android:allowBackup="true"
+17-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:11:9-35
+18        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+18-->[com.android.support:support-compat:28.0.0] C:\Users\manager\.gradle\caches\transforms-2\files-2.1\ccf94a4f227dfa4f17156620e28a8b98\support-compat-28.0.0\AndroidManifest.xml:22:18-91
+19        android:debuggable="true"
+20        android:icon="@mipmap/ic_launcher"
+20-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:12:9-43
+21        android:label="@string/app_name"
+21-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:13:9-41
+22        android:roundIcon="@mipmap/ic_launcher_round"
+22-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:14:9-54
+23        android:supportsRtl="true"
+23-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:15:9-35
+24        android:testOnly="true"
+25        android:theme="@style/TemaSemBarra"
 25-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:16:9-44
-26        <activity android:name="com.example.smartglove.Configuracoes_Activity" />
-26-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:17:9-69
-26-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:17:19-57
-27        <activity android:name="com.example.smartglove.SairSystem" />
-27-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:18:9-48
-27-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:18:19-45
-28        <activity android:name="com.example.smartglove.StarTreino_Activity" />
-28-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:19:9-57
-28-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:19:19-54
-29        <activity android:name="com.example.smartglove.Avalicao_Activity" />
-29-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:20:9-55
-29-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:20:19-52
-30        <activity android:name="com.example.smartglove.Grafico_Activity" />
-30-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:21:9-54
-30-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:21:19-51
-31        <activity
-31-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:22:9-31:20
-32            android:name="com.example.smartglove.SplashScreen_Activity"
-32-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:23:13-50
-33            android:label="@string/app_name"
-33-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:24:13-45
-34            android:theme="@style/TemaSemBarra" >
-34-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:25:13-48
-35            <intent-filter>
-35-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:26:13-30:29
-36                <action android:name="android.intent.action.MAIN" />
-36-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:27:17-69
-36-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:27:25-66
-37
-38                <category android:name="android.intent.category.LAUNCHER" />
-38-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:29:17-77
-38-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:29:27-74
-39            </intent-filter>
-40        </activity>
-41        <activity android:name="com.example.smartglove.Cadastro_Activity" />
-41-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:32:9-55
-41-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:32:19-52
-42        <activity android:name="com.example.smartglove.Login_Activity" />
-42-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:33:9-52
-42-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:33:19-49
-43        <activity
-43-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:34:9-36:59
-44            android:name="com.example.smartglove.MainActivity"
-44-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:35:13-41
-45            android:theme="@style/AppTheme.NoActionBar" />
-45-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:36:13-56
-46    </application>
-47
-48</manifest>
+26        android:usesCleartextTraffic="true" >
+26-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:17:9-44
+27        <activity android:name="com.example.smartglove.Manual_Activity" />
+27-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:18:9-62
+27-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:18:19-50
+28        <activity android:name="com.example.smartglove.Configuracoes_Activity" />
+28-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:19:9-60
+28-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:19:19-57
+29        <activity android:name="com.example.smartglove.SairSystem" />
+29-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:20:9-48
+29-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:20:19-45
+30        <activity android:name="com.example.smartglove.StarTreino_Activity" />
+30-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:21:9-57
+30-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:21:19-54
+31        <activity android:name="com.example.smartglove.Avalicao_Activity" />
+31-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:22:9-55
+31-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:22:19-52
+32        <activity android:name="com.example.smartglove.Grafico_Activity" />
+32-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:23:9-54
+32-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:23:19-51
+33        <activity
+33-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:24:9-33:20
+34            android:name="com.example.smartglove.SplashScreen_Activity"
+34-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:25:13-50
+35            android:label="@string/app_name"
+35-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:26:13-45
+36            android:theme="@style/TemaSemBarra" >
+36-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:27:13-48
+37            <intent-filter>
+37-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:28:13-32:29
+38                <action android:name="android.intent.action.MAIN" />
+38-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:29:17-69
+38-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:29:25-66
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:31:17-77
+40-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:31:27-74
+41            </intent-filter>
+42        </activity>
+43        <activity android:name="com.example.smartglove.Cadastro_Activity" />
+43-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:34:9-55
+43-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:34:19-52
+44        <activity android:name="com.example.smartglove.Login_Activity" />
+44-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:35:9-52
+44-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:35:19-49
+45        <activity
+45-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:36:9-38:59
+46            android:name="com.example.smartglove.MainActivity"
+46-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:37:13-41
+47            android:theme="@style/AppTheme.NoActionBar" />
+47-->C:\Users\manager\Desktop\SmartGlove\app\src\main\AndroidManifest.xml:38:13-56
+48    </application>
+49
+50</manifest>

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Configuracoes_Activity extends AppCompatActivity {
+public class Configuracoes_Activity extends SairSystem {
 
     private Button btnEsporteupdate;
     private TextView txtNomeUpdate, txtPesoUpdate, txtEmailUpdate, txtSenhaUpdate;

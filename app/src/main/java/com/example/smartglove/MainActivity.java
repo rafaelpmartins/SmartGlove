@@ -39,10 +39,8 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
             validarJiu = false, validarKick = false, validarMuay = false, validarWing = false;
     private List<Esportes> lstEsportes;
     private List<User> userList;
-
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
-
     private User user;
 
     @Override
@@ -92,7 +90,9 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
                 break;
             }
             case R.id.nav_item_three: {
-                Toast.makeText(this, "Manual", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, Manual_Activity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
                 break;
             }
             case R.id.nav_item_four: {
