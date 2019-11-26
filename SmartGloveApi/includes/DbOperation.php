@@ -46,9 +46,9 @@ class DbOperation
 	}
 
 	function loadinguser($email){
-		$stmt = $this->con->prepare("SELECT id, nome, email, esporte FROM users WHERE email LIKE '$email'");
+		$stmt = $this->con->prepare("SELECT id, nome, peso, email, esporte FROM users WHERE email LIKE '$email'");
 		$stmt->execute();
-		$stmt->bind_result($id, $nome, $email, $esporte);
+		$stmt->bind_result($id, $nome, $peso, $email, $esporte);
 
 		$datas = array();
 
@@ -56,6 +56,7 @@ class DbOperation
 			$data = array();
 			$data['id'] = $id;			
 			$data['nome'] = $nome;
+			$data['peso'] = $peso;
 			$data['email'] = $email;
 			$data['esporte'] = $esporte;
 			array_push($datas, $data);	

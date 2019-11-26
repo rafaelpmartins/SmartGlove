@@ -68,7 +68,7 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
     private SensorManager mSensorManager;
     private Sensor mAcelerometro;
     private List<Acelerometro> acelerometrosList;
-
+    private List forceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
                     params.put("tempo", TempoTreino);
                     params.put("data", getDateTime());
                     params.put("titulo", titulo);
-                    params.put("forca", Arrays.toString(force));
+                    params.put("forca", String.valueOf(forceList));
                     params.put("velocity", String.valueOf(acelerometrosList));
                     params.put("fk_id_user", String.valueOf(user.getId()));
 
@@ -161,6 +161,7 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
         ToolbarBack();
 
         acelerometrosList = new ArrayList<>();
+        forceList = new ArrayList();
     }
 
     private void ToolbarBack() {
@@ -330,13 +331,19 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
 
         // variáveis para recebr os valores do sensores
         dadoY = abs(mLinearAcceleration[Y]);
-        dadoY = dadoY / 2;
+        dadoY = dadoY / 3;
 
         Acelerometro acelerometro = new Acelerometro();
+        float pesoBraco = Float.parseFloat(user.getPeso().trim());
+        pesoBraco = pesoBraco / 20;
 
         if(dadoY > 7){
             acelerometro.setEixoY(dadoY);
             acelerometrosList.add(acelerometro);
+
+            float resultado = dadoY * dadoY;
+
+            forceList.add((pesoBraco * resultado) / 9.8);
         }
 
     }
@@ -401,11 +408,5 @@ public class StarTreino_Activity extends SairSystem implements SensorEventListen
             return null;
         }
     }
-
-//    public float calculaForca(){
-//        float peso_braco = 430f / Float.parseFloat(user.getPeso());
-//
-//        return peso_braco;
-//    }
 
 }

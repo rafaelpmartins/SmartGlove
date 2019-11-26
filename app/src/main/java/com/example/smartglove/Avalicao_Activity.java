@@ -17,11 +17,15 @@ public class Avalicao_Activity extends SairSystem {
     private Button btnRatingBar;
     private Button btnCompartilhar;
     private TextView txtRatingBar;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avalicao_layout);
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("user");
 
         btnRatingBar = (Button) findViewById(R.id.id_BtnRatingBar);
         btnCompartilhar = (Button) findViewById(R.id.id_btnCompartilhar);
@@ -94,7 +98,9 @@ public class Avalicao_Activity extends SairSystem {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Intent intent = new Intent(Avalicao_Activity.this, MainActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
                 break;
         }
 

@@ -183,6 +183,7 @@ public class MainActivity extends SairSystem implements NavigationView.OnNavigat
 
             user = new User(obj.getInt("id"),
                     obj.getString("nome"),
+                    obj.getString("peso"),
                     obj.getString("email"),
                     obj.getString("esporte"));
             userList.add(user);
